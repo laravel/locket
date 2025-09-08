@@ -4,6 +4,8 @@ This app has Sanctum and Passport configured, with commented out lines in the Us
 
 It comes with an MCP server at http://mcp-demo.test/mcp, with one public tool and one authenticated tool.
 
+There's also a basic token management system in 'Settings -> Profile' so you can easily setup and revoke Sanctum tokens.
+
 Setup:
 
 ```shell
