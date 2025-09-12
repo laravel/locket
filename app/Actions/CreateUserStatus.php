@@ -9,9 +9,6 @@ use App\Models\UserStatus;
 
 final class CreateUserStatus
 {
-    /**
-     * Create a new status for a user.
-     */
     public function handle(User $user, string $status): UserStatus
     {
         return $user->statuses()->create([

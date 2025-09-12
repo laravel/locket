@@ -8,7 +8,6 @@ use App\Actions\GetAllRecentStatuses;
 use Illuminate\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Server\Tool;
-use Laravel\Mcp\Server\Tools\ToolResult;
 
 class GetRecentStatuses extends Tool
 {
@@ -18,7 +17,7 @@ class GetRecentStatuses extends Tool
 
     protected string $description = 'Get recent status messages from all users.';
 
-    public function handle(Request $request): ToolResult
+    public function handle(Request $request): string
     {
         $validated = $request->validate([
             'limit' => 'numeric|min:1|max:50',
@@ -31,7 +30,7 @@ class GetRecentStatuses extends Tool
         $statuses = $this->getAllRecentStatuses->handle($limit);
 
         if ($statuses->isEmpty()) {
-            return ToolResult::text('No status messages found.');
+            return 'No status messages found.';
         }
 
         $output = "Recent status messages from all users:\n\n";
@@ -40,7 +39,7 @@ class GetRecentStatuses extends Tool
             $output .= "• {$status->user->name}: {$status->status} ({$status->created_at->diffForHumans()})\n";
         }
 
-        return ToolResult::text($output);
+        return $output;
     }
 
     /**

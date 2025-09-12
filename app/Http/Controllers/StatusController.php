@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 
 class StatusController extends Controller
 {
-    /**
-     * Store a new status.
-     */
     public function store(Request $request, CreateUserStatus $createUserStatus): RedirectResponse
     {
         $request->validate([
