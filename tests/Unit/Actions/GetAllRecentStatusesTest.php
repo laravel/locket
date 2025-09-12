@@ -20,14 +20,9 @@ test('it returns recent statuses from all users', function () {
     $action = new GetAllRecentStatuses;
     $statuses = $action->handle();
 
-    expect($statuses->count())->toBe(3);
-    expect($statuses->first()->id)->toBe($status3->id); // Most recent first
-    expect($statuses->get(1)->id)->toBe($status2->id);
-    expect($statuses->last()->id)->toBe($status1->id);
-
-    // Check that users are loaded
-    expect($statuses->first()->user->name)->toBe('Alice');
-    expect($statuses->get(1)->user->name)->toBe('Bob');
+    expect(count($statuses))->toBe(3);
+    expect($statuses[0]['user']['name'])->toBe('Alice');
+    expect($statuses[1]['user']['name'])->toBe('Bob');
 });
 
 test('it respects the limit parameter', function () {
@@ -39,24 +34,23 @@ test('it respects the limit parameter', function () {
     $action = new GetAllRecentStatuses;
     $statuses = $action->handle(3);
 
-    expect($statuses->count())->toBe(3);
+    expect(count($statuses))->toBe(3);
 });
 
 test('it returns empty collection when no statuses exist', function () {
     $action = new GetAllRecentStatuses;
     $statuses = $action->handle();
 
-    expect($statuses->count())->toBe(0);
-    expect($statuses->isEmpty())->toBeTrue();
+    expect($statuses)->toBeArray();
+    expect(count($statuses))->toBe(0);
 });
 
 test('it eager loads user relationships', function () {
-    $user = User::factory()->create(['name' => 'Test User']);
+    $user = User::factory()->create(['name' => 'testuser']);
     UserStatus::factory()->create(['user_id' => $user->id]);
 
     $action = new GetAllRecentStatuses;
     $statuses = $action->handle();
 
-    expect($statuses->first()->relationLoaded('user'))->toBeTrue();
-    expect($statuses->first()->user->name)->toBe('Test User');
+    expect($statuses[0]['user']['name'])->toBe('testuser');
 });

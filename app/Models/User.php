@@ -60,4 +60,20 @@ class User extends Authenticatable implements OAuthenticatable
     {
         return $this->hasMany(UserStatus::class);
     }
+
+    /**
+     * Get the user's bookmarked links.
+     */
+    public function userLinks(): HasMany
+    {
+        return $this->hasMany(UserLink::class);
+    }
+
+    /**
+     * Get the user's link notes.
+     */
+    public function linkNotes(): HasMany
+    {
+        return $this->hasMany(LinkNote::class);
+    }
 }

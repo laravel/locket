@@ -1,7 +1,7 @@
 {
     "mcpServers": {
-        "locket-local42": {
-            "url": "http://mcp-demo.test/mcp"
+        "locket-44": {
+            "url": "http://locket.test/mcp"
         }
     }
 }

@@ -2,6 +2,7 @@ import RegisteredUserController from '@/actions/App/Http/Controllers/Auth/Regist
 import { login } from '@/routes';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import { useState } from 'react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
@@ -11,12 +12,27 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
 export default function Register() {
+    const [username, setUsername] = useState('');
+
+    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Convert to lowercase and replace spaces/invalid chars with underscores, then clean up
+        const sanitized = e.target.value
+            .toLowerCase()
+            .replace(/\s/, '-')
+            .replace(/[^a-z0-9_-]/g, '_')
+            .replace(/_{2,}/g, '_')
+            .replace(/^_+|_+$/g, '');
+
+        setUsername(sanitized);
+        e.target.value = sanitized;
+    };
+
     return (
         <AuthLayout title="Create an account" description="Enter your details below to create your account">
             <Head title="Register" />
             <Form
                 {...RegisteredUserController.store.form()}
-                resetOnSuccess={['password', 'password_confirmation']}
+                resetOnSuccess={['password']}
                 disableWhileProcessing
                 className="flex flex-col gap-6"
             >
@@ -24,17 +40,22 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">Username</Label>
                                 <Input
                                     id="name"
                                     type="text"
                                     required
                                     autoFocus
                                     tabIndex={1}
-                                    autoComplete="name"
+                                    autoComplete="username"
                                     name="name"
-                                    placeholder="Full name"
+                                    onChange={handleUsernameChange}
+                                    placeholder="truecapaldi"
+                                    className="font-mono"
                                 />
+                                <p className="text-xs text-muted-foreground">
+                                    Only lowercase letters, numbers, dashes, and underscores allowed
+                                </p>
                                 <InputError message={errors.name} className="mt-2" />
                             </div>
 
@@ -61,23 +82,9 @@ export default function Register() {
                                     tabIndex={3}
                                     autoComplete="new-password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="Password (8+ chars)"
                                 />
                                 <InputError message={errors.password} />
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">Confirm password</Label>
-                                <Input
-                                    id="password_confirmation"
-                                    type="password"
-                                    required
-                                    tabIndex={4}
-                                    autoComplete="new-password"
-                                    name="password_confirmation"
-                                    placeholder="Confirm password"
-                                />
-                                <InputError message={errors.password_confirmation} />
                             </div>
 
                             <Button type="submit" className="mt-2 w-full" tabIndex={5}>

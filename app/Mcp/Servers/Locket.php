@@ -5,7 +5,7 @@ namespace App\Mcp\Servers;
 use App\Mcp\Tools\AddLink;
 use App\Mcp\Tools\GetRecentLinks;
 use App\Mcp\Tools\GetRecentStatuses;
-use App\Mcp\Tools\UpdateStatus;
+use App\Mcp\Tools\GetTrendingLinks;
 use Laravel\Mcp\Server;
 
 class Locket extends Server
@@ -14,13 +14,13 @@ class Locket extends Server
 
     public string $version = '0.0.1';
 
-    public string $instructions = 'Instructions describing how to use the server and its features. This may be used by clients to improve the LLM\'s understanding of the server\'s capabilities. It can be thought of as a "hint" to the LLM.';
+    public string $instructions = 'Used to interact with Locket, the social link sharing read later app for developers';
 
     public array $tools = [
-        // GetRecentLinks::class, // Public
-        // AddLink::class, // Authenticated
+        GetRecentLinks::class, // Public
+        GetTrendingLinks::class, // Public
+        AddLink::class, // Authenticated
         GetRecentStatuses::class, // Public
-        UpdateStatus::class, // Authenticated
     ];
 
     public array $resources = [

@@ -3,6 +3,7 @@ import { LucideIcon } from 'lucide-react';
 
 export interface Auth {
     user: User;
+    bookmarked_link_ids: number[];
 }
 
 export interface BreadcrumbItem {

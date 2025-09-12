@@ -2,7 +2,7 @@
 
 Social 'read later' system for developers. Accessible via web, API, and MCP.
 
-- [ ] Need usernames, not real names.
+- [x] Need usernames, not real names.
 - [ ] Multiple MCP servers - what should go in each? Not sure this makes sense, but want to show the ability
 - [ ] Don't use ids for links, use short strings/slugs, less likely for AI agents to mess them up
 
@@ -124,3 +124,4 @@ Basic note-taking on links
 ---
 
 - [ ] Session ID based tools? Within a session within Cursor should you be able to retain information?
+- [ ] MCP tool testing - revisit once laravel/mcp has better testing support

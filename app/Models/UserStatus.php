@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Http\Resources\UserStatusResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,7 @@ class UserStatus extends Model
     protected $fillable = [
         'user_id',
         'status',
+        'link_id',
     ];
 
     /**
@@ -27,5 +29,24 @@ class UserStatus extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the link associated with this status.
+     */
+    public function link(): BelongsTo
+    {
+        return $this->belongsTo(Link::class);
+    }
+
+    /**
+     * Convert this status to its frontend representation.
+     */
+    public function toFrontendFormat(): array
+    {
+        // Ensure user relationship is loaded
+        $this->loadMissing('user');
+
+        return UserStatusResource::make($this)->toArray(request());
     }
 }

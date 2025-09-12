@@ -2,6 +2,6 @@ import { SVGAttributes } from 'react';
 
 export default function AppLogoIcon(props) {
     return (
-        <img {...props} src="/apple-touch-icon.png" />
+        <img {...props} src="/locket.svg" />
     );
 }
