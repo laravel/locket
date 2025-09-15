@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e82f3d32413014399549a4de2c8f709b",
+    "content-hash": "9f44ddba3a3053007d2dbc401cddca15",
     "packages": [
         {
             "name": "brick/math",
@@ -1475,10 +1475,16 @@
         {
             "name": "laravel/mcp",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/mcp.git",
+                "reference": "e642cc01dd3cc8b9eb33fa7b0879f1332123d402"
+            },
             "dist": {
-                "type": "path",
-                "url": "../mcp",
-                "reference": "e690ab6fba47a48856f3c541d9eedf83fa0c02fd"
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/mcp/zipball/e642cc01dd3cc8b9eb33fa7b0879f1332123d402",
+                "reference": "e642cc01dd3cc8b9eb33fa7b0879f1332123d402",
+                "shasum": ""
             },
             "require": {
                 "ext-json": "*",
@@ -1500,15 +1506,16 @@
                 "phpstan/phpstan": "^2.1.25",
                 "rector/rector": "^2.1.7"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Laravel\\Mcp\\Server\\McpServiceProvider"
-                    ],
                     "aliases": {
                         "Mcp": "Laravel\\Mcp\\Server\\Facades\\Mcp"
-                    }
+                    },
+                    "providers": [
+                        "Laravel\\Mcp\\Server\\McpServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -1517,51 +1524,7 @@
                     "Laravel\\Mcp\\Server\\": "src/Server/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Workbench\\App\\": "workbench/app/",
-                    "Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@clear",
-                    "@prepare"
-                ],
-                "clear": [
-                    "@php vendor/bin/testbench package:purge-skeleton --ansi"
-                ],
-                "prepare": [
-                    "@php vendor/bin/testbench package:discover --ansi"
-                ],
-                "build": [
-                    "@php vendor/bin/testbench workbench:build --ansi"
-                ],
-                "serve": [
-                    "Composer\\Config::disableProcessTimeout",
-                    "@build",
-                    "@php vendor/bin/testbench serve --ansi"
-                ],
-                "lint": [
-                    "pint",
-                    "rector"
-                ],
-                "test:lint": [
-                    "pint --test",
-                    "rector --dry-run"
-                ],
-                "test:unit": [
-                    "pest --ci --coverage --min=79.6"
-                ],
-                "test:types": [
-                    "phpstan"
-                ],
-                "test": [
-                    "@test:lint",
-                    "@test:unit",
-                    "@test:types"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1581,9 +1544,7 @@
                 "issues": "https://github.com/laravel/mcp/issues",
                 "source": "https://github.com/laravel/mcp"
             },
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2025-09-15T11:44:54+00:00"
         },
         {
             "name": "laravel/passport",
@@ -12151,14 +12112,7 @@
             "time": "2024-03-03T12:36:25+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "laravel/mcp",
-            "version": "dev-main",
-            "alias": "0.1.2",
-            "alias_normalized": "0.1.2.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "laravel/mcp": 20
