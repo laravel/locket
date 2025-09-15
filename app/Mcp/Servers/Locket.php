@@ -2,6 +2,8 @@
 
 namespace App\Mcp\Servers;
 
+use App\Mcp\Prompts\SummarizeLink;
+use App\Mcp\Resources\LastAddedLink;
 use App\Mcp\Tools\AddLink;
 use App\Mcp\Tools\GetRecentLinks;
 use App\Mcp\Tools\GetRecentStatuses;
@@ -24,10 +26,10 @@ class Locket extends Server
     ];
 
     public array $resources = [
-        // ExampleResource::class,
+        LastAddedLink::class,
     ];
 
     public array $prompts = [
-        // ExamplePrompt::class,
+        SummarizeLink::class,
     ];
 }

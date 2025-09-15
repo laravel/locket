@@ -16,7 +16,7 @@ A basic token management system exists in 'Settings -> Profile' so users can eas
 
 ## MCP
 
-It comes with an MCP server at http://locket.test/mcp, with public tool and authenticated tools.
+It comes with an MCP server located at http://locket.test/mcp, with a few tools, a resource, and a prompt.
 
 Setup:
 
@@ -24,14 +24,7 @@ Setup:
 composer install
 cp .env.example .env
 php artisan passport:keys
-```
 
-Put the contents from `/storage/*.key` into your `.env`.
-
-```shell
 npm install
-```
-
-```shell
 npm run build
 ```
