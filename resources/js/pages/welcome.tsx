@@ -100,7 +100,7 @@ export default function Welcome() {
             </Head>
             <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-3 text-[#1b1b18] lg:justify-center lg:p-4 dark:bg-[#0a0a0a]">
                 <div className="flex flex-col w-full items-center justify-center gap-y-3 pb-24 lg:grow">
-                    <div className="z-20 px-2 relative w-full sticky bg-white bg-[#FDFDFC]/95 backdrop-blur supports-[backdrop-filter]:bg-[#FDFDFC]/80 top-0">
+                    <div className="z-20 px-2 relative w-full sticky bg-white bg-[#FDFDFC]/95 backdrop-blur supports-[backdrop-filter]:bg-[#FDFDFC]/80 top-0 dark:bg-[#0a0a0a]/95 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/80">
                         <Link
                             href={dashboard()}
                             title="Dashboard"
