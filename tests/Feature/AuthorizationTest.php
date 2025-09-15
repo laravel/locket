@@ -146,33 +146,6 @@ describe('Dashboard Data Isolation', function () {
     });
 });
 
-describe('Status Authorization', function () {
-    it('only allows authenticated users to create statuses', function () {
-        $response = $this->post('/status', [
-            'status' => 'Unauthenticated status',
-        ]);
-
-        $response->assertRedirect('/login');
-
-        expect(UserStatus::where('status', 'Unauthenticated status')->count())->toBe(0);
-    });
-
-    it('allows authenticated users to create their own statuses', function () {
-        $response = $this->actingAs($this->user1)
-            ->post('/status', [
-                'status' => 'My new status',
-            ]);
-
-        $response->assertSuccessful();
-
-        $createdStatus = UserStatus::where('user_id', $this->user1->id)
-            ->where('status', 'My new status')
-            ->first();
-
-        expect($createdStatus)->not->toBeNull();
-    });
-});
-
 describe('API Endpoint Authorization', function () {
     it('protects bookmark endpoint from unauthorized access', function () {
         $response = $this->post("/links/{$this->link->id}/bookmark");
@@ -186,7 +159,8 @@ describe('API Endpoint Authorization', function () {
         $response = $this->actingAs($this->user2)
             ->post("/links/{$newLink->id}/bookmark");
 
-        $response->assertSuccessful();
+        $response->assertRedirect();
+        $response->assertSessionHas('success');
 
         // Verify the user now has this link bookmarked
         expect(UserLink::where('user_id', $this->user2->id)

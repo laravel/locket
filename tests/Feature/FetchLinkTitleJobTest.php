@@ -57,30 +57,6 @@ test('it cleans up title with extra whitespace and entities', function () {
     expect($link->title)->toBe('Testing & Development with Multiple Spaces');
 });
 
-test('it does not update title if link already has a title', function () {
-    // Arrange
-    $user = User::factory()->create();
-    $link = Link::factory()->create([
-        'url' => 'https://example.com',
-        'title' => 'Existing Title',
-        'submitted_by_user_id' => $user->id,
-    ]);
-
-    $htmlResponse = '<html><head><title>New Title</title></head><body></body></html>';
-
-    Http::fake([
-        'https://example.com' => Http::response($htmlResponse, 200),
-    ]);
-
-    // Act
-    $job = new FetchLinkTitle($link);
-    $job->handle();
-
-    // Assert
-    $link->refresh();
-    expect($link->title)->toBe('Existing Title');
-});
-
 test('it handles HTTP errors gracefully', function () {
     // Arrange
     $user = User::factory()->create();

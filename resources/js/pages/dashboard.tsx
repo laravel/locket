@@ -1,4 +1,3 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
@@ -121,20 +120,7 @@ export default function Dashboard({ userLinks = [] }: DashboardProps) {
 function LinkAccordion({ userLink }: { userLink: UserLink }) {
     const [isOpen, setIsOpen] = useState(false);
 
-    const statusEmojis = {
-        unread: '📖',
-        reading: '📚',
-        read: '✅',
-        reference: '📑',
-        archived: '🗄️',
-    };
 
-    const categoryEmojis = {
-        read: '📖',
-        reference: '📚',
-        watch: '🎥',
-        tools: '🔧',
-    };
 
     return (
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
