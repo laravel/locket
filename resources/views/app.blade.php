@@ -40,6 +40,20 @@
         <meta name="apple-mobile-web-app-title" content="Locket" />
         <link rel="manifest" href="/site.webmanifest" />
 
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Locket">
+        <meta property="og:url" content="https://locket.laravel.cloud">
+        <meta property="og:image" content="https://locket.laravel.cloud/og.png">
+        <meta property="og:description" content="Link sharing social feed & read later app for developers">
+        <meta property="og:site_name" content="Locket">
+
+        <meta name="twitter:site" content="@laravelphp" />
+        <meta name="twitter:creator" content="@laravelphp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://locket.laravel.cloud/og.png" />
+        <meta name="twitter:title" content="Locket" />
+        <meta name="twitter:description" content="Link sharing social feed & read later app for developers" />
+
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
