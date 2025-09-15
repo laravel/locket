@@ -106,7 +106,7 @@ export default function Welcome() {
                             title="Dashboard"
                             className={`absolute top-3 right-0.5 rounded-md border border-[#19140035] p-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] ${isFirstLoad.current ? 'starting:opacity-0 opacity-100 transition-opacity duration-500' : ''}`}
                         >
-                            <LayoutGrid className="size-5"/>
+                            <LayoutGrid className="size-5 dark:text-white"/>
                         </Link>
                         <AppLogoIcon className="size-12 lg:size-14 mx-auto" />
                     </div>
