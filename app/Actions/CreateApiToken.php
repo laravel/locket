@@ -11,6 +11,6 @@ final class CreateApiToken
 {
     public function handle(User $user, string $name, array $abilities = ['*']): NewAccessToken
     {
-        return $user->createToken($name, $abilities);
+        return $user->createSanctumToken($name, $abilities);
     }
 }

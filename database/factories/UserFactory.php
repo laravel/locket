@@ -23,8 +23,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $names = [
+            'sarah_chen', 'alex_martinez', 'jamie_taylor', 'dev_mike',
+            'techie_sam', 'code_warrior', 'design_guru', 'startup_founder',
+            'data_scientist', 'fullstack_dev', 'mobile_expert', 'ai_researcher',
+            'product_manager', 'ux_designer', 'backend_ninja', 'frontend_wizard',
+            'devops_engineer', 'security_expert', 'growth_hacker', 'tech_lead',
+        ];
+
         return [
-            'name' => strtolower(fake()->userName()),
+            'name' => fake()->randomElement($names),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

@@ -68,7 +68,7 @@ final class CreateStatusWithLink
         ];
 
         // Also save thoughts as private notes if provided
-        if (!empty($thoughts)) {
+        if (! empty($thoughts)) {
             $noteResult = $this->addLinkNote->handle(
                 $linkResult['link']['id'],
                 $thoughts,

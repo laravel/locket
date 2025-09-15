@@ -38,7 +38,7 @@ class GetTrendingLinks extends Tool
         foreach ($trendingLinks as $link) {
             $bookmarkCount = $link['bookmark_count'];
             $plural = $bookmarkCount === 1 ? 'bookmark' : 'bookmarks';
-            
+
             $output .= "• [{$link['title']}]({$link['url']})\n";
             $output .= "  Category: {$link['category']} | {$bookmarkCount} {$plural} today\n";
             if ($link['description']) {

@@ -31,7 +31,7 @@ class AddLink extends Tool
         ]);
 
         $user = $request->user();
-        if (!$user) {
+        if (! $user) {
             return Response::error('Authentication required to add links');
         }
 
@@ -45,16 +45,16 @@ class AddLink extends Tool
 
             $wasBookmarked = $result['already_bookmarked'] ? 'already bookmarked' : 'added to your reading list';
             $categoryLabel = ucfirst($result['user_link']['category']);
-            
+
             $output = "✅ Link {$wasBookmarked}!\n\n";
             $output .= "**{$result['link']['title']}**\n";
             $output .= "URL: {$result['link']['url']}\n";
             $output .= "Category: {$categoryLabel}\n";
-            
+
             if (isset($result['note'])) {
                 $output .= "Note: {$result['note']['note']}\n";
             }
-            
+
             $output .= "\nStatus update created: {$result['status']['status']}";
 
             return Response::text($output);

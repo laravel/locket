@@ -9,7 +9,7 @@ uses(\Tests\TestCase::class, \Illuminate\Foundation\Testing\RefreshDatabase::cla
 
 it('revokes an existing token', function () {
     $user = User::factory()->create();
-    $token = $user->createToken('Test Token');
+    $token = $user->createSanctumToken('Test Token');
     $action = new RevokeApiToken;
 
     $result = $action->handle($user, $token->accessToken->id);
@@ -32,7 +32,7 @@ it('returns false when token does not exist', function () {
 it('cannot revoke another users token', function () {
     $user1 = User::factory()->create();
     $user2 = User::factory()->create();
-    $token = $user1->createToken('Test Token');
+    $token = $user1->createSanctumToken('Test Token');
     $action = new RevokeApiToken;
 
     $result = $action->handle($user2, $token->accessToken->id);

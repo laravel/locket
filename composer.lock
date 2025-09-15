@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94835093672693ac1c404ede01043674",
+    "content-hash": "e82f3d32413014399549a4de2c8f709b",
     "packages": [
         {
             "name": "brick/math",
@@ -1474,28 +1474,31 @@
         },
         {
             "name": "laravel/mcp",
-            "version": "dev-ai-121-sanctum-auth-works-great",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "../mcp",
-                "reference": "501bc8101a245edb0aa6f529e2a257a0c2703469"
+                "reference": "e690ab6fba47a48856f3c541d9eedf83fa0c02fd"
             },
             "require": {
-                "illuminate/console": "^10.48.28|^11.45.3|^12.28.1",
-                "illuminate/container": "^10.48.28|^11.45.3|^12.28.1",
-                "illuminate/contracts": "^10.48.28|^11.45.3|^12.28.1",
-                "illuminate/http": "^10.48.28|^11.45.3|^12.28.1",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "illuminate/console": "^10.49.0|^11.45.3|^12.28.1",
+                "illuminate/container": "^10.49.0|^11.45.3|^12.28.1",
+                "illuminate/contracts": "^10.49.0|^11.45.3|^12.28.1",
+                "illuminate/http": "^10.49.0|^11.45.3|^12.28.1",
                 "illuminate/json-schema": "^12.28.1",
-                "illuminate/routing": "^10.48.28|^11.45.3|^12.28.1",
-                "illuminate/support": "^10.48.28|^11.45.3|^12.28.1",
-                "illuminate/validation": "^10.48.28|^11.45.3|^12.28.1",
+                "illuminate/routing": "^10.49.0|^11.45.3|^12.28.1",
+                "illuminate/support": "^10.49.0|^11.45.3|^12.28.1",
+                "illuminate/validation": "^10.49.0|^11.45.3|^12.28.1",
                 "php": "^8.1"
             },
             "require-dev": {
-                "laravel/pint": "^1.20.0",
+                "laravel/pint": "1.20.0",
                 "orchestra/testbench": "^8.36.0|^9.15.0|^10.6.0",
-                "pestphp/pest": "^2.36.0|^3.0|^4.0.4",
-                "phpstan/phpstan": "^2.1.22"
+                "pestphp/pest": "^2.36.0|^3.8.4|^4.1.0",
+                "phpstan/phpstan": "^2.1.25",
+                "rector/rector": "^2.1.7"
             },
             "type": "library",
             "extra": {
@@ -1540,13 +1543,15 @@
                     "@php vendor/bin/testbench serve --ansi"
                 ],
                 "lint": [
-                    "pint"
+                    "pint",
+                    "rector"
                 ],
                 "test:lint": [
-                    "pint --test"
+                    "pint --test",
+                    "rector --dry-run"
                 ],
                 "test:unit": [
-                    "pest --ci --parallel --coverage --min=70.3"
+                    "pest --ci --coverage --min=79.6"
                 ],
                 "test:types": [
                     "phpstan"
@@ -12146,7 +12151,14 @@
             "time": "2024-03-03T12:36:25+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "laravel/mcp",
+            "version": "dev-main",
+            "alias": "0.1.2",
+            "alias_normalized": "0.1.2.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "laravel/mcp": 20

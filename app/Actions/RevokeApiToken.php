@@ -10,6 +10,6 @@ final class RevokeApiToken
 {
     public function handle(User $user, int $tokenId): bool
     {
-        return $user->tokens()->where('id', $tokenId)->delete() > 0;
+        return $user->sanctumTokens()->where('id', $tokenId)->delete() > 0;
     }
 }

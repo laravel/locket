@@ -269,7 +269,7 @@ function LinkAccordion({ userLink }: { userLink: UserLink }) {
                                     <input type="hidden" name="link_id" value={userLink.link.id} />
                                     <Textarea
                                         name="note"
-                                        placeholder="Add your thoughts about this link..."
+                                        placeholder="Add private notes about this link..."
                                         disabled={processing}
                                         className="min-h-[80px]"
                                     />

@@ -3,21 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasAllTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\Contracts\OAuthenticatable;
-use Laravel\Passport\HasApiTokens as HasPassportTokens;
-
-// use Laravel\Sanctum\HasApiTokens as HasSanctumTokens;
 
 class User extends Authenticatable implements OAuthenticatable
-    // class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasPassportTokens, Notifiable;
-    // use HasFactory, HasSanctumTokens, Notifiable;
+    use HasAllTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.

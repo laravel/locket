@@ -11,7 +11,7 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 it('can display tokens on profile page', function () {
     $user = User::factory()->create();
-    $user->createToken('Test Token');
+    $user->createSanctumToken('Test Token');
 
     $response = actingAs($user)->get('/settings/profile');
 
@@ -67,7 +67,7 @@ it('validates token name length when creating', function () {
 
 it('can revoke an api token', function () {
     $user = User::factory()->create();
-    $token = $user->createToken('Test Token');
+    $token = $user->createSanctumToken('Test Token');
 
     $response = actingAs($user)->deleteJson("/settings/profile/tokens/{$token->accessToken->id}");
 
@@ -92,7 +92,7 @@ it('cannot revoke another users token', function () {
     $user1 = User::factory()->create();
     $user2 = User::factory()->create();
 
-    $token = $user1->createToken('User 1 Token');
+    $token = $user1->createSanctumToken('User 1 Token');
 
     $response = actingAs($user2)->deleteJson("/settings/profile/tokens/{$token->accessToken->id}");
 
@@ -114,7 +114,7 @@ it('requires authentication to create tokens', function () {
 
 it('requires authentication to revoke tokens', function () {
     $user = User::factory()->create();
-    $token = $user->createToken('Test Token');
+    $token = $user->createSanctumToken('Test Token');
 
     $response = $this->deleteJson("/settings/profile/tokens/{$token->accessToken->id}");
 
@@ -138,9 +138,9 @@ it('tokens are ordered by creation date desc', function () {
     $user = User::factory()->create();
 
     // Create some tokens
-    $user->createToken('First Token');
-    $user->createToken('Second Token');
-    $user->createToken('Third Token');
+    $user->createSanctumToken('First Token');
+    $user->createSanctumToken('Second Token');
+    $user->createSanctumToken('Third Token');
 
     $response = actingAs($user)->get('/settings/profile');
 

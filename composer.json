@@ -12,7 +12,7 @@
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
-        "laravel/mcp": "dev-ai-121-sanctum-auth-works-great",
+        "laravel/mcp": "dev-main as 0.1.2",
         "laravel/passport": "^13.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
