@@ -98,9 +98,9 @@ export default function Welcome() {
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
-            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-3 pb-20 text-[#1b1b18] lg:justify-center lg:p-4 dark:bg-[#0a0a0a]">
-                <div className="flex flex-col w-full items-center justify-center lg:grow">
-                    <div className="z-20 py-2 relative w-full sticky bg-white bg-[#FDFDFC]/95 backdrop-blur supports-[backdrop-filter]:bg-[#FDFDFC]/80 top-0">
+            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-3 text-[#1b1b18] lg:justify-center lg:p-4 dark:bg-[#0a0a0a]">
+                <div className="flex flex-col w-full items-center justify-center gap-y-3 pb-24 lg:grow">
+                    <div className="z-20 px-2 relative w-full sticky bg-white bg-[#FDFDFC]/95 backdrop-blur supports-[backdrop-filter]:bg-[#FDFDFC]/80 top-0">
                         <Link
                             href={dashboard()}
                             title="Dashboard"
@@ -108,7 +108,7 @@ export default function Welcome() {
                         >
                             <LayoutGrid className="size-5"/>
                         </Link>
-                        <AppLogoIcon className="size-12 lg:size-18 mx-auto" />
+                        <AppLogoIcon className="size-12 lg:size-14 mx-auto" />
                     </div>
 
                     <div className="flex w-full max-w-7xl flex-col lg:flex-row gap-6 grow">
