@@ -66,7 +66,9 @@ trait HasAllTokens
     {
         // If it's null or a Passport token, delegate to parent
         if ($accessToken === null || ! $this->isSanctumToken($accessToken)) {
-            return parent::withAccessToken($accessToken);
+            $this->accessToken = $accessToken;
+
+            return $this;
         }
 
         // If we reach here, it's likely a Sanctum token that doesn't match the type
