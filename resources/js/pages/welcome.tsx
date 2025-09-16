@@ -281,15 +281,15 @@ function TrendingLinksSection({
                     No trending links yet today. Be the first to share something!
                 </p>
             </div>
-            Link sharing read later app
+            <span className="block text-xs/4 py-1 px-1">Locket is your social link sharing read-later app for developers</span>
             </div>
 
         );
     }
 
     return (
-        <div>
-        <div className={`rounded-lg border border-[#19140014] bg-white dark:border-[#3E3E3A] dark:bg-[#0a0a0a] ${mobile ? 'mb-6' : ''}`}>
+        <div className={mobile ? 'mb-3' : ''}>
+        <div className="rounded-lg border border-[#19140014] bg-white dark:border-[#3E3E3A] dark:bg-[#0a0a0a]">
             <div className="p-4 border-b border-[#19140014] dark:border-[#3E3E3A]">
                 <div className="flex items-center gap-2">
                     <TrendingUp className="size-4 text-[#3e3e3a] dark:text-[#a3a3a3]" />
@@ -370,7 +370,7 @@ function TrendingLinksSection({
                 ))}
             </div>
         </div>
-        Link sharing read later app
+        <span className="block text-xs/4 py-1 px-1">Locket is your social link sharing read-later app for developers</span>
 
         </div>
     );
