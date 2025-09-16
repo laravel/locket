@@ -1,4 +1,4 @@
-import { dashboard } from '@/routes';
+import { dashboard, mcp } from '@/routes';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage, router } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
@@ -6,7 +6,8 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import BottomAuthNav from '@/components/bottom-auth-nav';
 import AppLogoIcon from '@/components/app-logo-icon';
 import SafeTextWithBreaks from '@/components/safe-text-with-breaks';
-import { LayoutGrid, Bookmark, BookmarkCheck, TrendingUp, ExternalLink } from 'lucide-react';
+import { LayoutGrid, Bookmark, BookmarkCheck, TrendingUp, ExternalLink, ArrowRight, ArrowRightIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 type Status = {
     id: number;
@@ -108,8 +109,12 @@ export default function Welcome() {
                         >
                             <LayoutGrid className="size-5 dark:text-white"/>
                         </Link>
-                        <AppLogoIcon className="size-12 lg:size-14 mx-auto" />
+                        <Link href="/"><AppLogoIcon className="size-12 lg:size-14 mx-auto" /></Link>
                     </div>
+
+                    <Link href={mcp()} className="rounded bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600 shadow-sm hover:bg-blue-100 dark:bg-blue-500/20 dark:text-blue-400 dark:shadow-none dark:hover:bg-blue-500/30 flex items-center justify-center gap-x-0.5 group">
+                        Locket MCP <ArrowRightIcon className="size-3 group-hover:translate-x-1 transition duration-600"/>
+                    </Link>
 
                     <div className="flex w-full max-w-7xl flex-col lg:flex-row gap-6 grow">
                         {/* Mobile trending links - shown on top */}
@@ -264,6 +269,7 @@ function TrendingLinksSection({
 }) {
     if (trendingLinks.length === 0) {
         return (
+            <div>
             <div className={`rounded-lg border border-[#19140014] bg-white p-4 dark:border-[#3E3E3A] dark:bg-[#0a0a0a] ${mobile ? 'mb-6' : ''}`}>
                 <div className="mb-3 flex items-center gap-2">
                     <TrendingUp className="size-4 text-[#3e3e3a] dark:text-[#a3a3a3]" />
@@ -275,10 +281,14 @@ function TrendingLinksSection({
                     No trending links yet today. Be the first to share something!
                 </p>
             </div>
+            Link sharing read later app
+            </div>
+
         );
     }
 
     return (
+        <div>
         <div className={`rounded-lg border border-[#19140014] bg-white dark:border-[#3E3E3A] dark:bg-[#0a0a0a] ${mobile ? 'mb-6' : ''}`}>
             <div className="p-4 border-b border-[#19140014] dark:border-[#3E3E3A]">
                 <div className="flex items-center gap-2">
@@ -359,6 +369,9 @@ function TrendingLinksSection({
                     </div>
                 ))}
             </div>
+        </div>
+        Link sharing read later app
+
         </div>
     );
 }

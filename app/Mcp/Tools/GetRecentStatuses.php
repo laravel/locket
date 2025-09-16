@@ -25,7 +25,7 @@ class GetRecentStatuses extends Tool
             'limit' => 'Invalid limit, must be numeric, minimum of 1, and maximum of 50',
         ]);
 
-        $limit = (int) $validated['limit'];
+        $limit = (int) ($validated['limit'] ?? 10);
 
         $statuses = $this->getAllRecentStatuses->handle($limit);
 

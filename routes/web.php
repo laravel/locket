@@ -12,6 +12,10 @@ Route::get('/', function (GetAllRecentStatuses $statuses, GetTrendingLinksToday 
     ]);
 })->name('home');
 
+Route::get('/mcp', function () {
+    return Inertia::render('mcp');
+})->name('mcp');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         $user = auth()->user();

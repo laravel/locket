@@ -13,7 +13,7 @@ final class GetRecentLinks
      */
     public function handle(int $limit = 10): array
     {
-        $recentLinks = Link::with('submittedByUser:id,name')
+        $recentLinks = Link::with('submittedBy:id,name')
             ->latest('created_at')
             ->limit($limit)
             ->get()
@@ -24,7 +24,7 @@ final class GetRecentLinks
                     'title' => $link->title,
                     'description' => $link->description,
                     'category' => $link->category->value,
-                    'submitted_by' => $link->submittedByUser->name,
+                    'submitted_by' => $link->submittedBy->name,
                     'created_at' => $link->created_at->diffForHumans(),
                 ];
             });
