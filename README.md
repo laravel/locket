@@ -35,3 +35,9 @@ php artisan passport:keys
 npm install
 npm run build
 ```
+
+# HTTP Notes
+
+Many AI agents use Node which comes with its own certificate store, meaning they'll fail to connect to an MCP server on https://.
+
+We recommend leaving Locket on http:// locally for testing with AI agents, and using https:// on production.
