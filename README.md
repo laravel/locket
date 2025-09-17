@@ -1,6 +1,6 @@
 # Locket
 
-Locket is a read-later app and a link sharing social feed. Users can share interesting links, manage their 'to read' list of links, and bookmark links shared by others.
+Locket is an MCP demo app. It combines a read-later app with a link sharing social feed. Users can share interesting links, manage their 'to read' list of links, and bookmark links shared by others.
 
 ![screenshot](art/screenshot.png)
 
