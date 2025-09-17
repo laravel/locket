@@ -12,7 +12,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('settings/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // API Token Management
+    // API Token Management - Using Passport Personal Access Tokens
     Route::post('settings/profile/tokens', [ProfileController::class, 'createToken'])->name('profile.tokens.create');
     Route::delete('settings/profile/tokens/{tokenId}', [ProfileController::class, 'revokeToken'])->name('profile.tokens.revoke');
 

@@ -22,11 +22,30 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $tokens = $request->user()->tokens()
+            ->where('revoked', false)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($token) {
+                return [
+                    'id' => $token->id,
+                    'name' => $token->name,
+                    'last_used_at' => $token->last_used_at?->toDateTimeString(),
+                    'created_at' => $token->created_at->toDateTimeString(),
+                ];
+            });
+
+        // Get and immediately clear the created token from session
+        $createdToken = session('created_token');
+        if ($createdToken) {
+            session()->forget('created_token');
+        }
+
         return Inertia::render('settings/profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
-            'tokens' => $request->user()->sanctumTokens()->orderBy('created_at', 'desc')->get(),
-            'createdToken' => $request->session()->get('token'),
+            'tokens' => $tokens,
+            'createdToken' => $createdToken,
         ]);
     }
 
@@ -72,25 +91,32 @@ class ProfileController extends Controller
      */
     public function createToken(CreateApiTokenRequest $request, CreateApiToken $createToken): RedirectResponse|JsonResponse
     {
-        $newToken = $createToken->handle($request->user(), $request->validated()['name']);
+        $tokenResult = $createToken->handle($request->user(), $request->validated()['name']);
 
-        if ($request->wantsJson()) {
+        // For API requests (not Inertia), return JSON
+        if ($request->wantsJson() && ! $request->header('X-Inertia')) {
             return response()->json([
-                'token' => $newToken->plainTextToken,
-                'accessToken' => $newToken->accessToken->only(['id', 'name', 'last_used_at', 'created_at']),
+                'token' => $tokenResult->accessToken,
+                'accessToken' => [
+                    'id' => $tokenResult->token->id,
+                    'name' => $tokenResult->token->name,
+                    'last_used_at' => $tokenResult->token->last_used_at,
+                    'created_at' => $tokenResult->token->created_at,
+                ],
             ]);
         }
 
-        return back()->with([
-            'token' => $newToken->plainTextToken,
-            'tokenData' => $newToken->accessToken->only(['id', 'name', 'last_used_at', 'created_at']),
-        ]);
+        // For Inertia and regular web requests, store token in session then redirect
+        // Using session instead of flash because flash doesn't always work with Inertia redirects
+        session(['created_token' => $tokenResult->accessToken]);
+
+        return back();
     }
 
     /**
      * Revoke an API token.
      */
-    public function revokeToken(Request $request, RevokeApiToken $revokeToken, int $tokenId): RedirectResponse|JsonResponse
+    public function revokeToken(Request $request, RevokeApiToken $revokeToken, string $tokenId): RedirectResponse|JsonResponse
     {
         $success = $revokeToken->handle($request->user(), $tokenId);
 

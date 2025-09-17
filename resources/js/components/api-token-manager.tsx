@@ -37,14 +37,6 @@ export default function ApiTokenManager({ tokens, createdToken: propCreatedToken
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [createdToken, setCreatedToken] = useState<string | null>(null);
 
-    // Check if we have a created token from props (flash data)
-    useEffect(() => {
-        if (propCreatedToken && !createdToken) {
-            setCreatedToken(propCreatedToken);
-            setIsCreateDialogOpen(true); // Open dialog to show the token
-        }
-    }, [propCreatedToken, createdToken]);
-
 
     const handleRevokeToken = (tokenId: number) => {
         if (!confirm('Are you sure you want to revoke this token? This action cannot be undone.')) {
@@ -72,6 +64,33 @@ export default function ApiTokenManager({ tokens, createdToken: propCreatedToken
 
     return (
         <div className="space-y-6">
+            {/* Show the created token if we have one from the server */}
+            {propCreatedToken && (
+                <Card id="new-token-card" className="border-green-500 bg-green-50 dark:bg-green-950">
+                    <CardHeader>
+                        <CardTitle className="text-green-700 dark:text-green-300">Token Created Successfully!</CardTitle>
+                        <CardDescription className="text-green-600 dark:text-green-400">
+                            Make sure to copy this token now. You won't be able to see it again!
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-3">
+                            <code className="block p-3 bg-background rounded border text-xs font-mono break-all">
+                                {propCreatedToken}
+                            </code>
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => copyToClipboard(propCreatedToken)}
+                            >
+                                <Copy className="h-4 w-4 mr-2" />
+                                Copy Token
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
             <div className="flex items-center justify-between">
                 <HeadingSmall
                     title="API Tokens"
@@ -96,7 +115,10 @@ export default function ApiTokenManager({ tokens, createdToken: propCreatedToken
                         {!createdToken ? (
                             <Form
                                 {...ProfileController.createToken.form()}
-                                resetOnSuccess
+                                onSuccess={() => {
+                                    // Just close the dialog, the token will appear at the top of the page
+                                    setIsCreateDialogOpen(false);
+                                }}
                             >
                                 {({ processing, errors }) => (
                                     <>

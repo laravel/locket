@@ -16,10 +16,24 @@ To learn the most from Locket about Laravel MCP take a look at these directories
 - `app/Mcp/Servers/Locket.php`
 - `app/Mcp/Tools/`
 - `app/Mcp/Actions/`
+- `routes/api.php`
+
+## API
+
+Locket provides a REST API for programmatic access. See the [API Documentation](API.md) for detailed endpoint information and usage examples.
+
+### Getting an API Token
+
+1. Log in to your Locket account
+2. Go to Settings → Profile (`/settings/profile`)
+3. Create a new personal access token in the API Tokens section
+4. Use the token in the `Authorization: Bearer YOUR_TOKEN` header for API requests
 
 ## Auth
 
-This app uses [Laravel Passport](https://laravel.com/docs/passport) for MCP authentication and API authentication.
+This app uses [Laravel Passport](https://laravel.com/docs/passport) for both MCP OAuth authentication and API token authentication.
+
+Users can manage their API tokens in the user profile settings area (`/settings/profile`).
 
 ## MCP
 

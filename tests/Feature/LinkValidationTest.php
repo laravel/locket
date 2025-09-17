@@ -5,9 +5,11 @@ declare(strict_types=1);
 use App\Enums\LinkCategory;
 use App\Enums\LinkStatus;
 use App\Models\User;
+use Illuminate\Support\Facades\Queue;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
+    Queue::fake();
 });
 
 it('validates category when adding a link', function () {

@@ -1,13 +1,7 @@
 {
     "mcpServers": {
-        "locket-oauth": {
+        "locket": {
             "url": "http://locket.test/mcp"
-        },
-        "locket-sanctum": {
-            "url": "http://locket.test/mcp-sanctum",
-            "headers": {
-                "Authorization": "Bearer 1|1Nna9KvBSOpUDzDuVFQod1smwzkLIBisknkeS8w3e5c9432b"
-            }
         }
     }
 }

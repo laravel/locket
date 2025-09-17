@@ -8,8 +8,16 @@ use App\Models\User;
 
 final class RevokeApiToken
 {
-    public function handle(User $user, int $tokenId): bool
+    public function handle(User $user, string $tokenId): bool
     {
-        return $user->sanctumTokens()->where('id', $tokenId)->delete() > 0;
+        $token = $user->tokens()->where('id', $tokenId)->first();
+
+        if (! $token) {
+            return false;
+        }
+
+        $token->revoke();
+
+        return true;
     }
 }
