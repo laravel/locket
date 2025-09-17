@@ -18,7 +18,7 @@ A basic token management system exists in 'Settings -> Profile' so users can eas
 
 ## MCP
 
-It comes with an MCP server located at http://locket.test/mcp, with a few tools, a resource, and a prompt.
+It comes with an MCP server located at http://locket.test/mcp, with tools, a resource, and a prompt.
 
 Setup:
 
