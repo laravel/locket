@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Mcp\Tools;
 
 use App\Actions\CreateStatusWithLink;
+use Exception;
 use Illuminate\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
@@ -31,6 +32,7 @@ class AddLink extends Tool
         ]);
 
         $user = $request->user();
+
         if (! $user) {
             return Response::error('Authentication required to add links');
         }
@@ -43,7 +45,10 @@ class AddLink extends Tool
                 $validated['category_hint'] ?? null
             );
 
-            $wasBookmarked = $result['already_bookmarked'] ? 'already bookmarked' : 'added to your reading list';
+            $wasBookmarked = $result['already_bookmarked']
+                ? 'already bookmarked'
+                : 'added to your reading list';
+
             $categoryLabel = ucfirst($result['user_link']['category']);
 
             $output = "✅ Link {$wasBookmarked}!\n\n";
@@ -58,8 +63,7 @@ class AddLink extends Tool
             $output .= "\nStatus update created: {$result['status']['status']}";
 
             return Response::text($output);
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return Response::error("Failed to add link: {$e->getMessage()}");
         }
     }

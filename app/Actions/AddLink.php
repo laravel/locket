@@ -20,7 +20,6 @@ final class AddLink
      */
     public function handle(string $url, User $user, ?string $categoryHint = null): array
     {
-        // Validate URL
         $validator = Validator::make(['url' => $url], [
             'url' => 'required|url|max:2048',
         ]);
@@ -29,7 +28,6 @@ final class AddLink
             throw new ValidationException($validator);
         }
 
-        // Find or create the public link
         $link = Link::firstOrCreate(
             ['url' => $url],
             [
@@ -39,18 +37,15 @@ final class AddLink
             ]
         );
 
-        // Dispatch job to fetch proper title if this is a new link
         if ($link->wasRecentlyCreated) {
             FetchLinkTitle::dispatch($link);
         }
 
-        // Check if user already has this link bookmarked
         $userLink = UserLink::where('user_id', $user->id)
             ->where('link_id', $link->id)
             ->first();
 
         if (! $userLink) {
-            // Create user's bookmark
             $userLink = UserLink::create([
                 'user_id' => $user->id,
                 'link_id' => $link->id,
@@ -89,9 +84,8 @@ final class AddLink
             $pathParts = array_filter(explode('/', $path));
             $lastPart = end($pathParts);
 
-            // Clean up the last part of the path
-            $title = str_replace(['-', '_', '.html', '.php'], ' ', $lastPart);
-            $title = ucwords($title);
+            // Clean up the last part of the path...
+            $title = ucwords(str_replace(['-', '_', '.html', '.php'], ' ', $lastPart));
 
             if (strlen($title) > 3) {
                 return $title;
@@ -106,21 +100,21 @@ final class AddLink
      */
     private function suggestCategory(string $url, ?string $categoryHint): LinkCategory
     {
-        // Use provided hint if valid
+        // Use provided hint if valid...
         if ($categoryHint && in_array($categoryHint, ['read', 'reference', 'watch', 'tools'])) {
             return LinkCategory::from($categoryHint);
         }
 
         $url = strtolower($url);
 
-        // Video platforms
+        // Video platforms...
         if (str_contains($url, 'youtube.com') ||
             str_contains($url, 'vimeo.com') ||
             str_contains($url, 'twitch.tv')) {
             return LinkCategory::WATCH;
         }
 
-        // Documentation sites
+        // Documentation sites...
         if (str_contains($url, 'docs.') ||
             str_contains($url, '/docs/') ||
             str_contains($url, 'api.') ||
@@ -128,14 +122,14 @@ final class AddLink
             return LinkCategory::REFERENCE;
         }
 
-        // Tool/service sites
+        // Tool / service sites...
         if (str_contains($url, 'github.com') ||
             str_contains($url, 'npm.') ||
             str_contains($url, 'packagist.org')) {
             return LinkCategory::TOOLS;
         }
 
-        // Default to read
+        // Default to read...
         return LinkCategory::READ;
     }
 }

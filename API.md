@@ -4,7 +4,7 @@ The Locket API provides programmatic access to link sharing and social feed func
 
 ## Authentication
 
-All API requests must include an Authorization header with a Bearer token and Accept header for JSON responses:
+All API requests must include an `Authorization` header with a `Bearer` token and an `Accept` header for JSON responses:
 
 ```http
 Authorization: Bearer YOUR_API_TOKEN

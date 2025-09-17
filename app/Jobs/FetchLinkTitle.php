@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\Link;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Http;
@@ -57,9 +58,10 @@ class FetchLinkTitle implements ShouldQueue
                     'html_preview' => substr($html, 0, 200),
                 ]);
 
-                // Extract title using regex
+                // Extract title using regex...
                 if (preg_match('/<title[^>]*>(.*?)<\/title>/is', $html, $matches)) {
                     $rawTitle = $matches[1];
+
                     $title = html_entity_decode(trim($rawTitle));
 
                     Log::info('Title found in HTML', [
@@ -69,10 +71,10 @@ class FetchLinkTitle implements ShouldQueue
                         'decoded_title' => $title,
                     ]);
 
-                    // Clean up the title (remove extra whitespace, line breaks)
+                    // Clean up the title (remove extra whitespace, line breaks)...
                     $title = preg_replace('/\s+/', ' ', $title);
 
-                    // Limit title length to prevent database issues
+                    // Limit title length to prevent database issues...
                     $title = substr($title, 0, 255);
 
                     Log::info('Title cleaned and processed', [
@@ -110,7 +112,7 @@ class FetchLinkTitle implements ShouldQueue
                     'response_body' => substr($response->body(), 0, 200),
                 ]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Failed to fetch title for link', [
                 'link_id' => $this->link->id,
                 'url' => $this->link->url,

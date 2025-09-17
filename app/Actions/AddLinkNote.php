@@ -17,7 +17,6 @@ final class AddLinkNote
      */
     public function handle(int $linkId, string $note, User $user): array
     {
-        // Validate input
         $validator = Validator::make([
             'link_id' => $linkId,
             'note' => $note,
@@ -30,7 +29,6 @@ final class AddLinkNote
             throw new ValidationException($validator);
         }
 
-        // Ensure user has this link bookmarked
         $userLink = UserLink::where('user_id', $user->id)
             ->where('link_id', $linkId)
             ->first();
@@ -41,7 +39,6 @@ final class AddLinkNote
             ]);
         }
 
-        // Create the note
         $linkNote = LinkNote::create([
             'user_id' => $user->id,
             'link_id' => $linkId,
