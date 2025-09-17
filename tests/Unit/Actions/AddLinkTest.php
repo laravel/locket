@@ -7,9 +7,17 @@ use App\Enums\LinkCategory;
 use App\Models\Link;
 use App\Models\User;
 use App\Models\UserLink;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
 uses(\Tests\TestCase::class, \Illuminate\Foundation\Testing\RefreshDatabase::class);
+
+beforeEach(function () {
+    // Fake HTTP requests to prevent real HTTP calls in tests
+    Http::fake([
+        '*' => Http::response('<html><head><title>Test Page Title</title></head><body>Test content</body></html>', 200),
+    ]);
+});
 
 test('it creates new link and user bookmark', function () {
     $user = User::factory()->create();

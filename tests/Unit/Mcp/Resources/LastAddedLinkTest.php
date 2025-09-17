@@ -31,13 +31,12 @@ describe('basic functionality', function () {
         $response = Locket::actingAs($user)->resource(LastAddedLink::class);
 
         $response->assertOk()
-            ->assertSee('📖 **Your Last Added Link**')
-            ->assertSee('**Interesting Article**')
-            ->assertSee('URL: https://example.com/article')
-            ->assertSee('Category: Read')
-            ->assertSee('Status: Unread')
-            ->assertSee('Description: A very interesting article about technology')
-            ->assertSee('*No notes attached to this link.*');
+            ->assertSee(['📖 **Your Last Added Link**', '**Interesting Article**',
+                'URL: https://example.com/article',
+                'Category: Read',
+                'Status: Unread',
+                'Description: A very interesting article about technology',
+                '*No notes attached to this link.*']);
     });
 
     test('returns link with notes when notes exist', function () {
@@ -69,10 +68,10 @@ describe('basic functionality', function () {
         $response = Locket::actingAs($user)->resource(LastAddedLink::class);
 
         $response->assertOk()
-            ->assertSee('**Article with Notes**')
-            ->assertSee('**📝 Your Notes:**')
-            ->assertSee('• This is my first note')
-            ->assertSee('• This is my second note');
+            ->assertSee(['**Article with Notes**',
+                '**📝 Your Notes:**',
+                '• This is my first note',
+                '• This is my second note']);
     });
 
     test('returns most recent link when user has multiple links', function () {
@@ -268,15 +267,15 @@ describe('content formatting', function () {
         $response = Locket::actingAs($user)->resource(LastAddedLink::class);
 
         $response->assertOk()
-            ->assertSee('📖 **Your Last Added Link**')
-            ->assertSee('**Complete Article**')
-            ->assertSee('URL: https://example.com/complete')
-            ->assertSee('Category: Tools')
-            ->assertSee('Status: Archived')
-            ->assertSee('Added:')
-            ->assertSee('Description: A complete article with description')
-            ->assertSee('**📝 Your Notes:**')
-            ->assertSee('• My thoughts on this');
+            ->assertSee(['📖 **Your Last Added Link**',
+                '**Complete Article**',
+                'URL: https://example.com/complete',
+                'Category: Tools',
+                'Status: Archived',
+                'Added:',
+                'Description: A complete article with description',
+                '**📝 Your Notes:**',
+                '• My thoughts on this']);
     });
 
     test('handles special characters in content', function () {
