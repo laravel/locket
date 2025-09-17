@@ -16,7 +16,7 @@ class Locket extends Server
 
     public string $version = '0.0.1';
 
-    public string $instructions = 'Used to interact with Locket, the social link sharing read later app for developers';
+    public string $instructions = 'Used to interact with Locket, the social link sharing read later app for developers.';
 
     public array $tools = [
         GetRecentLinks::class, // Public

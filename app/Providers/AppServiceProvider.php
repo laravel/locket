@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
 
-        // Register the authorization view for OAuth consent screen
+        // Register the authorization view for OAuth consent screen...
         /**
          * @param  array{client: \Laravel\Passport\Client, user: \App\Models\User, scopes: array<string>, request: \Illuminate\Http\Request, authToken: string}  $parameters
          */
@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
             return view('auth.authorize', $parameters);
         });
 
-        // Register authorization policies
+        // Register authorization policies...
         Gate::policy(UserLink::class, UserLinkPolicy::class);
         Gate::policy(LinkNote::class, LinkNotePolicy::class);
         Gate::policy(UserStatus::class, UserStatusPolicy::class);

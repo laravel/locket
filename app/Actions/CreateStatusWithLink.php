@@ -21,7 +21,6 @@ final class CreateStatusWithLink
      */
     public function handle(string $url, ?string $thoughts, User $user, ?string $categoryHint = null): array
     {
-        // Validate input
         $validator = Validator::make([
             'url' => $url,
             'thoughts' => $thoughts,
@@ -36,13 +35,10 @@ final class CreateStatusWithLink
             throw new ValidationException($validator);
         }
 
-        // Add the link to user's collection
         $linkResult = $this->addLink->handle($url, $user, $categoryHint ?? 'read');
 
-        // Create formatted status message
         $statusText = $thoughts ? trim($thoughts) : '';
 
-        // Create the status update
         $status = UserStatus::create([
             'user_id' => $user->id,
             'status' => $statusText,
@@ -60,7 +56,7 @@ final class CreateStatusWithLink
             'already_bookmarked' => $linkResult['already_bookmarked'],
         ];
 
-        // Also save thoughts as private notes if provided
+        // Also save thoughts as private notes if provided...
         if (! empty($thoughts)) {
             $noteResult = $this->addLinkNote->handle(
                 $linkResult['link']['id'],

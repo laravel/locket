@@ -38,9 +38,11 @@ class GetRecentLinks extends Tool
         foreach ($recentLinks as $link) {
             $output .= "• [{$link['title']}]({$link['url']})\n";
             $output .= "  Category: {$link['category']} | Added by {$link['submitted_by']} {$link['created_at']}\n";
+
             if ($link['description']) {
                 $output .= "  {$link['description']}\n";
             }
+
             $output .= "\n";
         }
 

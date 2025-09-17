@@ -19,7 +19,6 @@ final class UpdateUserLink
      */
     public function handle(int $userLinkId, User $user, ?string $status = null, ?string $category = null): array
     {
-        // Validate input
         $data = array_filter([
             'user_link_id' => $userLinkId,
             'status' => $status,
@@ -44,7 +43,7 @@ final class UpdateUserLink
             throw new ValidationException($validator);
         }
 
-        // Find the user's link
+        // Find the user's link...
         $userLink = UserLink::where('id', $userLinkId)
             ->where('user_id', $user->id)
             ->first();
@@ -57,7 +56,7 @@ final class UpdateUserLink
 
         $changes = [];
 
-        // Update status if provided and valid transition
+        // Update status if provided and valid transition...
         if ($status !== null) {
             $newStatus = LinkStatus::from($status);
 
@@ -68,23 +67,26 @@ final class UpdateUserLink
             }
 
             $userLink->status = $newStatus;
+
             $changes['status'] = [
                 'from' => $userLink->getOriginal('status'),
                 'to' => $status,
             ];
         }
 
-        // Update category if provided
+        // Update category if provided...
         if ($category !== null) {
             $oldCategory = $userLink->category->value;
+
             $userLink->category = LinkCategory::from($category);
+
             $changes['category'] = [
                 'from' => $oldCategory,
                 'to' => $category,
             ];
         }
 
-        // Save changes
+        // Save changes...
         $userLink->save();
 
         return [

@@ -12,6 +12,7 @@ final class GetAllRecentStatuses
 {
     /**
      * Get recent statuses as minimal payload.
+     *
      * When a user is provided, only that user's statuses are returned.
      */
     public function handle(int $limit = 10, ?User $user = null): array
@@ -19,11 +20,11 @@ final class GetAllRecentStatuses
         $query = UserStatus::query()
             ->with([
                 'user' => function ($q) {
-                    // Select only what's needed to compute avatar and name
+                    // Select only what's needed to compute avatar and name...
                     $q->select('id', 'name', 'email');
                 },
                 'link' => function ($q) {
-                    // Select link data for display
+                    // Select link data for display...
                     $q->select('id', 'url', 'title', 'description');
                 },
             ])

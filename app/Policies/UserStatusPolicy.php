@@ -14,7 +14,7 @@ class UserStatusPolicy
      */
     public function view(User $user, UserStatus $userStatus): bool
     {
-        // Statuses are generally public, but only the owner can see all details
+        // Statuses are generally public, but only the owner can see all details...
         return true;
     }
 

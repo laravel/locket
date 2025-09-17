@@ -17,7 +17,7 @@ final class GetTrendingLinksToday
     {
         $today = Carbon::today();
 
-        // First get the trending link IDs with counts
+        // First get the trending link IDs with counts...
         $trendingLinkIds = DB::table('user_links')
             ->select('link_id')
             ->selectRaw('COUNT(*) as bookmark_count')
@@ -32,7 +32,7 @@ final class GetTrendingLinksToday
             return [];
         }
 
-        // Then get the full link details
+        // Then, get the full link details...
         $trendingLinks = Link::whereIn('id', $trendingLinkIds->keys())
             ->get()
             ->map(function ($link) use ($trendingLinkIds) {
@@ -45,7 +45,6 @@ final class GetTrendingLinksToday
                     'bookmark_count' => $trendingLinkIds[$link->id]->bookmark_count,
                 ];
             })
-            // Sort by bookmark count again since whereIn doesn't preserve order
             ->sortByDesc('bookmark_count')
             ->values();
 

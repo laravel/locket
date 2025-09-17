@@ -41,9 +41,11 @@ class GetTrendingLinks extends Tool
 
             $output .= "• [{$link['title']}]({$link['url']})\n";
             $output .= "  Category: {$link['category']} | {$bookmarkCount} {$plural} today\n";
+
             if ($link['description']) {
                 $output .= "  {$link['description']}\n";
             }
+
             $output .= "\n";
         }
 
