@@ -5,27 +5,20 @@ declare(strict_types=1);
 namespace App\Mcp\Resources;
 
 use App\Actions\GetUserLastAddedLink;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Mcp\Request;
 use Laravel\Mcp\Server\Resource;
 
 class LastAddedLink extends Resource
 {
     protected string $description = 'The user\'s most recently added link with any attached notes.';
 
-    public function __construct(
-        protected ?Authenticatable $user = null,
-        protected ?GetUserLastAddedLink $getUserLastAddedLink = null
-    ) {
-        $this->getUserLastAddedLink = $getUserLastAddedLink ?? new GetUserLastAddedLink;
-    }
-
-    public function read(): string
+    public function handle(Request $request, GetUserLastAddedLink $getUserLastAddedLink): string
     {
-        if (! $this->user) {
+        if (! $request->user()) {
             return "❌ **Authentication Required**\n\nYou must be authenticated to view your last added link.";
         }
 
-        $result = $this->getUserLastAddedLink->handle($this->user);
+        $result = $getUserLastAddedLink->handle($request->user());
 
         if (! $result) {
             return "⚠️ **No Links Found**\n\nYou haven't added any links to your Locket yet. Try adding your first link!";

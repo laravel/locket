@@ -1479,12 +1479,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/mcp.git",
-                "reference": "2f37d9219e2f05950d02895a81c1eb12a63b72a7"
+                "reference": "aaba156ea5845a6ab27a58a967c19f6de132ecdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/mcp/zipball/2f37d9219e2f05950d02895a81c1eb12a63b72a7",
-                "reference": "2f37d9219e2f05950d02895a81c1eb12a63b72a7",
+                "url": "https://api.github.com/repos/laravel/mcp/zipball/aaba156ea5845a6ab27a58a967c19f6de132ecdb",
+                "reference": "aaba156ea5845a6ab27a58a967c19f6de132ecdb",
                 "shasum": ""
             },
             "require": {
@@ -1545,7 +1545,7 @@
                 "issues": "https://github.com/laravel/mcp/issues",
                 "source": "https://github.com/laravel/mcp"
             },
-            "time": "2025-09-16T17:34:47+00:00"
+            "time": "2025-09-17T08:28:24+00:00"
         },
         {
             "name": "laravel/passport",
