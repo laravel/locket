@@ -18,7 +18,7 @@ test('it creates link and status update', function () {
     $result = $action->handle('https://example.com/article', 'This is interesting!', $user);
 
     expect($result['link']['url'])->toBe('https://example.com/article');
-    expect($result['status']['status'])->toBe("This is interesting!\n\nSaved link: https://example.com/article");
+    expect($result['status']['status'])->toBe('This is interesting!');
     expect($result['already_bookmarked'])->toBeFalse();
 
     expect(Link::count())->toBe(1);
@@ -36,7 +36,7 @@ test('it creates status update without thoughts', function () {
 
     $result = $action->handle('https://example.com/article', null, $user);
 
-    expect($result['status']['status'])->toBe('Saved link: https://example.com/article');
+    expect($result['status']['status'])->toBe('');
 });
 
 test('it handles already bookmarked link', function () {
@@ -47,7 +47,7 @@ test('it handles already bookmarked link', function () {
     $action = new CreateStatusWithLink(new \App\Actions\AddLink, new \App\Actions\AddLinkNote);
     $result = $action->handle('https://example.com/article', 'Already seen this', $user);
 
-    expect($result['status']['status'])->toBe("Already seen this\n\nBookmarked link: https://example.com/article");
+    expect($result['status']['status'])->toBe('Already seen this');
     expect($result['already_bookmarked'])->toBeTrue();
 });
 

@@ -9,7 +9,7 @@ interface SafeTextWithBreaksProps {
 export default function SafeTextWithBreaks({ text, className }: SafeTextWithBreaksProps) {
     // Split by newlines and render each line with breaks between them
     const lines = text.split('\n');
-    
+
     return (
         <span className={className}>
             {lines.map((line, index) => (
@@ -26,7 +26,7 @@ function LinkifiedText({ text }: { text: string }) {
     // URL regex pattern - matches http/https URLs
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const parts = text.split(urlRegex);
-    
+
     return (
         <>
             {parts.map((part, index) => {
@@ -38,10 +38,10 @@ function LinkifiedText({ text }: { text: string }) {
                             href={part}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                            className="inline text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300 break-all"
                         >
                             {part}
-                            <ExternalLink className="h-3 w-3" />
+                            <ExternalLink className="inline h-3 w-3 ml-1" />
                         </a>
                     );
                 } else {

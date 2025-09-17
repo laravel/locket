@@ -42,13 +42,6 @@ final class CreateStatusWithLink
         // Create formatted status message
         $statusText = $thoughts ? trim($thoughts) : '';
 
-        if ($statusText) {
-            $statusText .= "\n\n";
-        }
-
-        $action = $linkResult['already_bookmarked'] ? 'Bookmarked' : 'Saved';
-        $statusText .= "{$action} link: {$url}";
-
         // Create the status update
         $status = UserStatus::create([
             'user_id' => $user->id,

@@ -37,7 +37,11 @@ class GetRecentStatuses extends Tool
 
         foreach ($statuses as $status) {
             $when = \Carbon\Carbon::parse($status['created_at'])->diffForHumans();
-            $output .= "• {$status['user']['name']}: {$status['status']} ({$when})\n";
+            $linkInfo = '';
+            if ($status['link']) {
+                $linkInfo = " - Link: {$status['link']['title']} ({$status['link']['url']})";
+            }
+            $output .= "• {$status['user']['name']}: {$status['status']}{$linkInfo} ({$when})\n";
         }
 
         return $output;
