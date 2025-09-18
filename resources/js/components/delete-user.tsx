@@ -40,25 +40,8 @@ export default function DeleteUser() {
                             resetOnSuccess
                             className="space-y-6"
                         >
-                            {({ resetAndClearErrors, processing, errors }) => (
+                            {({ resetAndClearErrors, processing }) => (
                                 <>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="password" className="sr-only">
-                                            Password
-                                        </Label>
-
-                                        <Input
-                                            id="password"
-                                            type="password"
-                                            name="password"
-                                            ref={passwordInput}
-                                            placeholder="Password"
-                                            autoComplete="current-password"
-                                        />
-
-                                        <InputError message={errors.password} />
-                                    </div>
-
                                     <DialogFooter className="gap-2">
                                         <DialogClose asChild>
                                             <Button variant="secondary" onClick={() => resetAndClearErrors()}>
