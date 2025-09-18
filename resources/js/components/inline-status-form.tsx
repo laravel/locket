@@ -6,8 +6,8 @@ import { SendIcon } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
 
-// URL extraction regex - matches http/https URLs
-const URL_REGEX = /https?:\/\/(?:[-\w.])+(?::[0-9]+)?(?:\/(?:[\w\/_.])*)?(?:\?(?:[\w&=%.])*)?(?:#(?:[\w.])*)?/gi;
+// URL extraction regex - matches http/https URLs (everything from https?:// until whitespace or end)
+const URL_REGEX = /https?:\/\/[^\s]+/gi;
 
 // Helper function to extract URLs from text
 function extractUrlsFromText(text: string): { urls: string[]; remainingText: string } {
