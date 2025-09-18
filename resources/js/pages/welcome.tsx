@@ -104,7 +104,7 @@ export default function Welcome() {
                 <div className="flex w-full flex-col items-center justify-center gap-y-3 pb-24 lg:grow">
                     <div className="sticky top-0 z-20 flex w-full items-center justify-between bg-[#FDFDFC]/95 bg-white px-2 backdrop-blur supports-[backdrop-filter]:bg-[#FDFDFC]/80 dark:bg-[#0a0a0a]/95 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/80">
                         <a href="https://github.com/laravel/locket">
-                            <svg className="h-auto w-6 text-[#24292f] hover:text-[#24292f]/80" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
+                            <svg className="h-auto w-6 text-[#24292f] hover:text-[#24292f]/80 dark:text-[#fdfdfc] hover:dark:text-[#f3f3fd]/80" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     fillRule="evenodd"
                                     clipRule="evenodd"
@@ -325,7 +325,7 @@ function TrendingLinksSection({
                     </div>
                     <p className="text-xs text-[#3e3e3a] dark:text-[#a3a3a3]">No trending links yet today. Be the first to share something!</p>
                 </div>
-                <span className="block px-1 py-1 text-xs/4">Locket is your social link sharing read-later app for developers</span>
+                <span className="block px-1 py-1 text-xs/4 dark:text-[#a3a3a3]">Locket is your social link sharing read-later app for developers</span>
             </div>
         );
     }
