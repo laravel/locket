@@ -109,7 +109,7 @@ export default function InlineStatusForm() {
             </form>
 
             {(form.errors.url || customError) && (
-                <div className="absolute -bottom-5 left-0 text-xs text-red-500">
+                <div className="absolute -top-8 left-0 rounded-full bg-red-100 px-3 py-1 text-xs text-red-600 shadow-sm dark:bg-red-900/20 dark:text-red-400">
                     {form.errors.url || customError}
                 </div>
             )}
