@@ -9,8 +9,8 @@ use App\Models\UserStatus;
 uses(\Tests\TestCase::class, \Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('it returns recent statuses from all users', function () {
-    $user1 = User::factory()->create(['name' => 'Alice']);
-    $user2 = User::factory()->create(['name' => 'Bob']);
+    $user1 = User::factory()->create(['name' => 'Alice', 'github_username' => 'alice123']);
+    $user2 = User::factory()->create(['name' => 'Bob', 'github_username' => 'bobsmith']);
 
     // Create statuses for different users
     $status1 = UserStatus::factory()->create(['user_id' => $user1->id, 'created_at' => now()->subHours(2)]);
@@ -21,8 +21,8 @@ test('it returns recent statuses from all users', function () {
     $statuses = $action->handle();
 
     expect(count($statuses))->toBe(3);
-    expect($statuses[0]['user']['name'])->toBe('Alice');
-    expect($statuses[1]['user']['name'])->toBe('Bob');
+    expect($statuses[0]['user']['name'])->toBe('alice123');  // Displays github_username
+    expect($statuses[1]['user']['name'])->toBe('bobsmith'); // Displays github_username
 });
 
 test('it respects the limit parameter', function () {
@@ -46,11 +46,11 @@ test('it returns empty collection when no statuses exist', function () {
 });
 
 test('it eager loads user relationships', function () {
-    $user = User::factory()->create(['name' => 'testuser']);
+    $user = User::factory()->create(['name' => 'testuser', 'github_username' => 'testuser']);
     UserStatus::factory()->create(['user_id' => $user->id]);
 
     $action = new GetAllRecentStatuses;
     $statuses = $action->handle();
 
-    expect($statuses[0]['user']['name'])->toBe('testuser');
+    expect($statuses[0]['user']['name'])->toBe('testuser');  // Displays github_username
 });

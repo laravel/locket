@@ -8,7 +8,7 @@ use App\Models\UserStatus;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 it('renders recent statuses on the home page', function () {
-    $user = User::factory()->create(['name' => 'janedoe']);
+    $user = User::factory()->create(['name' => 'janedoe', 'github_username' => null]);
     UserStatus::factory()->for($user)->create(['status' => 'Hello world']);
 
     $response = $this->get('/');

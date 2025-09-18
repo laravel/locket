@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -35,8 +34,11 @@ class UserFactory extends Factory
             'name' => fake()->randomElement($names),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => null,
             'remember_token' => Str::random(10),
+            'github_id' => fake()->unique()->numberBetween(1000000, 99999999),
+            'github_username' => fake()->randomElement($names),
+            'avatar' => fn (array $attributes) => "https://avatars.githubusercontent.com/u/{$attributes['github_id']}?v=4",
         ];
     }
 

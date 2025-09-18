@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Actions\CreateApiToken;
-use App\Actions\RevokeApiToken;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\CreateApiTokenRequest;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
@@ -70,10 +68,6 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
         $user = $request->user();
 
         Auth::logout();
@@ -89,9 +83,9 @@ class ProfileController extends Controller
     /**
      * Create a new API token.
      */
-    public function createToken(CreateApiTokenRequest $request, CreateApiToken $createToken): RedirectResponse|JsonResponse
+    public function createToken(CreateApiTokenRequest $request): RedirectResponse|JsonResponse
     {
-        $tokenResult = $createToken->handle($request->user(), $request->validated()['name']);
+        $tokenResult = $request->user()->createToken($request->validated()['name']);
 
         // For API requests (not Inertia), return JSON
         if ($request->wantsJson() && ! $request->header('X-Inertia')) {
@@ -116,17 +110,19 @@ class ProfileController extends Controller
     /**
      * Revoke an API token.
      */
-    public function revokeToken(Request $request, RevokeApiToken $revokeToken, string $tokenId): RedirectResponse|JsonResponse
+    public function revokeToken(Request $request, string $tokenId): RedirectResponse|JsonResponse
     {
-        $success = $revokeToken->handle($request->user(), $tokenId);
+        $token = $request->user()->tokens()->where('id', $tokenId)->first();
 
-        if (! $success) {
+        if (! $token) {
             if ($request->wantsJson()) {
                 return response()->json(['error' => 'Token not found'], 404);
             }
 
             return back()->withErrors(['token' => 'Token not found or could not be revoked.']);
         }
+
+        $token->revoke();
 
         if ($request->wantsJson()) {
             return response()->json(['message' => 'Token revoked successfully']);

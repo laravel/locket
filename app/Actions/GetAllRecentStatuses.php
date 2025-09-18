@@ -20,8 +20,8 @@ final class GetAllRecentStatuses
         $query = UserStatus::query()
             ->with([
                 'user' => function ($q) {
-                    // Select only what's needed to compute avatar and name...
-                    $q->select('id', 'name', 'email');
+                    // Select only what's needed to compute avatar and name
+                    $q->select('id', 'name', 'email', 'github_username', 'avatar');
                 },
                 'link' => function ($q) {
                     // Select link data for display...

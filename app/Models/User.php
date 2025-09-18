@@ -24,6 +24,9 @@ class User extends Authenticatable implements OAuthenticatable
         'name',
         'email',
         'password',
+        'github_id',
+        'github_username',
+        'avatar',
     ];
 
     /**

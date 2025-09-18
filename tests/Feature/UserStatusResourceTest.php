@@ -14,6 +14,7 @@ it('formats user status with correct avatar URLs', function () {
     $user = User::factory()->create([
         'name' => 'John Doe',
         'email' => 'john@example.com',
+        'github_username' => 'johndoe',
     ]);
 
     $status = UserStatus::factory()->create([
@@ -30,9 +31,10 @@ it('formats user status with correct avatar URLs', function () {
         ->and($result['id'])->toBe($status->id)
         ->and($result['status'])->toBe('Hello world!')
         ->and($result['created_at'])->toBe($status->created_at->toAtomString())
-        ->and($result['user'])->toHaveKeys(['name', 'avatar', 'avatar_fallback'])
-        ->and($result['user']['name'])->toBe('John Doe')
-        ->and($result['user']['avatar'])->toContain('gravatar.com/avatar')
+        ->and($result['user'])->toHaveKeys(['name', 'github_username', 'avatar', 'avatar_fallback'])
+        ->and($result['user']['name'])->toBe('johndoe')  // Now displays github_username
+        ->and($result['user']['github_username'])->toBe('johndoe')
+        ->and($result['user']['avatar'])->toContain('avatars.githubusercontent.com')  // GitHub avatar
         ->and($result['user']['avatar_fallback'])->toContain('avatars.laravel.cloud');
 });
 
@@ -55,6 +57,7 @@ it('creates consistent format with GetAllRecentStatuses action', function () {
     $user = User::factory()->create([
         'name' => 'Jane Smith',
         'email' => 'jane@example.com',
+        'github_username' => 'janesmith',
     ]);
 
     $status = UserStatus::factory()->create([
@@ -83,6 +86,7 @@ it('provides convenient toFrontendFormat method', function () {
     $user = User::factory()->create([
         'name' => 'Bob Wilson',
         'email' => 'bob@example.com',
+        'github_username' => 'bobwilson',
     ]);
 
     $status = UserStatus::factory()->create([
@@ -95,7 +99,7 @@ it('provides convenient toFrontendFormat method', function () {
     expect($result)->toHaveKeys(['id', 'status', 'created_at', 'user'])
         ->and($result['id'])->toBe($status->id)
         ->and($result['status'])->toBe('Convenience method test!')
-        ->and($result['user']['name'])->toBe('Bob Wilson')
-        ->and($result['user']['avatar'])->toContain('gravatar.com/avatar')
+        ->and($result['user']['name'])->toBe('bobwilson')  // Now displays github_username
+        ->and($result['user']['avatar'])->toContain('avatars.githubusercontent.com')  // GitHub avatar
         ->and($result['user']['avatar_fallback'])->toContain('avatars.laravel.cloud');
 });

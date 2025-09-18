@@ -13,7 +13,7 @@ uses(\Tests\TestCase::class, \Illuminate\Foundation\Testing\RefreshDatabase::cla
 
 describe('basic functionality', function () {
     test('returns recent statuses with default limit', function () {
-        $user = User::factory()->create(['name' => 'Jane Doe']);
+        $user = User::factory()->create(['name' => 'Jane Doe', 'github_username' => null]);
         $link = Link::factory()->create([
             'url' => 'https://example.com',
             'title' => 'Example Article',
@@ -34,7 +34,7 @@ describe('basic functionality', function () {
     });
 
     test('respects custom limit parameter', function () {
-        $user = User::factory()->create(['name' => 'Test User']);
+        $user = User::factory()->create(['name' => 'Test User', 'github_username' => null]);
 
         // Create 5 statuses
         for ($i = 1; $i <= 5; $i++) {
@@ -61,7 +61,7 @@ describe('basic functionality', function () {
     });
 
     test('orders statuses by most recent first', function () {
-        $user = User::factory()->create(['name' => 'Test User']);
+        $user = User::factory()->create(['name' => 'Test User', 'github_username' => null]);
 
         $oldStatus = UserStatus::factory()->create([
             'user_id' => $user->id,
@@ -83,8 +83,8 @@ describe('basic functionality', function () {
     });
 
     test('includes statuses from multiple users', function () {
-        $user1 = User::factory()->create(['name' => 'Alice']);
-        $user2 = User::factory()->create(['name' => 'Bob']);
+        $user1 = User::factory()->create(['name' => 'Alice', 'github_username' => null]);
+        $user2 = User::factory()->create(['name' => 'Bob', 'github_username' => null]);
 
         UserStatus::factory()->create([
             'user_id' => $user1->id,
@@ -106,7 +106,7 @@ describe('basic functionality', function () {
     });
 
     test('handles statuses with different links', function () {
-        $user = User::factory()->create(['name' => 'Test User']);
+        $user = User::factory()->create(['name' => 'Test User', 'github_username' => null]);
 
         // Create two statuses with different links
         UserStatus::factory()->create([
@@ -171,7 +171,7 @@ describe('content formatting', function () {
     });
 
     test('formats relative timestamps correctly', function () {
-        $user = User::factory()->create(['name' => 'Time User']);
+        $user = User::factory()->create(['name' => 'Time User', 'github_username' => null]);
 
         UserStatus::factory()->create([
             'user_id' => $user->id,
@@ -187,7 +187,7 @@ describe('content formatting', function () {
     });
 
     test('handles special characters in status content', function () {
-        $user = User::factory()->create(['name' => 'Special & <User>']);
+        $user = User::factory()->create(['name' => 'Special & <User>', 'github_username' => null]);
 
         UserStatus::factory()->create([
             'user_id' => $user->id,
@@ -202,7 +202,7 @@ describe('content formatting', function () {
     });
 
     test('handles very long status messages', function () {
-        $user = User::factory()->create(['name' => 'Verbose User']);
+        $user = User::factory()->create(['name' => 'Verbose User', 'github_username' => null]);
         $longStatus = str_repeat('This is a long status message. ', 20);
 
         UserStatus::factory()->create([
@@ -220,9 +220,9 @@ describe('content formatting', function () {
 
     test('displays user names correctly', function () {
         $users = [
-            User::factory()->create(['name' => 'John Smith']),
-            User::factory()->create(['name' => 'jane_doe']),
-            User::factory()->create(['name' => 'CamelCase']),
+            User::factory()->create(['name' => 'John Smith', 'github_username' => null]),
+            User::factory()->create(['name' => 'jane_doe', 'github_username' => null]),
+            User::factory()->create(['name' => 'CamelCase', 'github_username' => null]),
         ];
 
         foreach ($users as $index => $user) {

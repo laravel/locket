@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
 import { ExternalLink } from 'lucide-react';
+import { Fragment } from 'react';
 
 interface SafeTextWithBreaksProps {
     text: string;
@@ -38,10 +38,10 @@ function LinkifiedText({ text }: { text: string }) {
                             href={part}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300 break-all"
+                            className="inline break-all text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
                         >
                             {part}
-                            <ExternalLink className="inline h-3 w-3 ml-1" />
+                            <ExternalLink className="ml-1 inline h-3 w-3" />
                         </a>
                     );
                 } else {

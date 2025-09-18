@@ -25,13 +25,18 @@ class UserStatusResource extends JsonResource
         $gravatar = "https://www.gravatar.com/avatar/{$hash}?s=128&d=404";
         $fallback = 'https://avatars.laravel.cloud/'.urlencode($email).'?vibe=stealth';
 
+        // Use GitHub avatar if available, otherwise fall back to Gravatar
+        $avatar = $this->user?->avatar ?? $gravatar;
+        $displayName = $this->user?->github_username ?? $this->user?->name ?? 'Unknown';
+
         return [
             'id' => $this->id,
             'status' => $this->status,
             'created_at' => $this->created_at?->toAtomString(),
             'user' => [
-                'name' => $this->user?->name ?? 'Unknown',
-                'avatar' => $gravatar,
+                'name' => $displayName,
+                'github_username' => $this->user?->github_username,
+                'avatar' => $avatar,
                 'avatar_fallback' => $fallback,
             ],
             'link' => $this->link ? [
