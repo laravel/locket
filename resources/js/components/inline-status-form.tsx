@@ -6,8 +6,29 @@ import { SendIcon } from 'lucide-react';
 import type React from 'react';
 import { useState } from 'react';
 
+// URL extraction regex - matches http/https URLs
+const URL_REGEX = /https?:\/\/(?:[-\w.])+(?::[0-9]+)?(?:\/(?:[\w\/_.])*)?(?:\?(?:[\w&=%.])*)?(?:#(?:[\w.])*)?/gi;
+
+// Helper function to extract URLs from text
+function extractUrlsFromText(text: string): { urls: string[]; remainingText: string } {
+    const urls = text.match(URL_REGEX) || [];
+    const remainingText = text.replace(URL_REGEX, '').trim().replace(/\s+/g, ' ');
+    return { urls, remainingText };
+}
+
+// Helper function to validate if a string is a valid URL
+function isValidUrl(string: string): boolean {
+    try {
+        new URL(string);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 export default function InlineStatusForm() {
     const [showModal, setShowModal] = useState(false);
+    const [customError, setCustomError] = useState<string>('');
 
     const form = useForm({
         url: '',
@@ -16,15 +37,29 @@ export default function InlineStatusForm() {
 
     const handleUrlSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!form.data.url.trim()) return;
+        setCustomError('');
 
-        // Validate URL format
-        try {
-            new URL(form.data.url);
-            setShowModal(true);
-        } catch {
-            alert('Please enter a valid URL');
+        const inputText = form.data.url.trim();
+        if (!inputText) return;
+
+        // Extract URLs from the text
+        const { urls, remainingText } = extractUrlsFromText(inputText);
+
+        if (urls.length === 0) {
+            setCustomError('Please include a valid URL (starting with http:// or https://)');
+            return;
         }
+
+        // Validate the first URL
+        if (!isValidUrl(urls[0])) {
+            setCustomError('The URL found is not valid');
+            return;
+        }
+
+        // Set the first URL as the link and remaining text as thoughts
+        form.setData('url', urls[0]);
+        form.setData('thoughts', remainingText);
+        setShowModal(true);
     };
 
     const submitWithThoughts = (thoughts: string) => {
@@ -48,10 +83,13 @@ export default function InlineStatusForm() {
             {/* Single URL input for all devices */}
             <form onSubmit={handleUrlSubmit} className="flex w-full items-center gap-2">
                 <input
-                    type="url"
+                    type="text"
                     value={form.data.url}
-                    onChange={(e) => form.setData('url', e.target.value)}
-                    placeholder="Share link"
+                    onChange={(e) => {
+                        form.setData('url', e.target.value);
+                        setCustomError(''); // Clear error when user types
+                    }}
+                    placeholder="Share link with your thoughts..."
                     className="h-10 w-full rounded-lg border border-[#19140045] bg-transparent px-3 py-2 text-sm text-[#1a1a16] placeholder-[#3e3e3a]/70 transition-all duration-200 focus:border-[#1915014a] focus:ring-0 focus:outline-none dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:placeholder-[#a3a3a3]/60 dark:focus:border-[#62605b]"
                     required
                     disabled={form.processing}
@@ -70,14 +108,20 @@ export default function InlineStatusForm() {
                 </button>
             </form>
 
-            {form.errors.url && <div className="absolute -bottom-5 left-0 text-xs text-red-500">{form.errors.url}</div>}
+            {(form.errors.url || customError) && (
+                <div className="absolute -bottom-5 left-0 text-xs text-red-500">
+                    {form.errors.url || customError}
+                </div>
+            )}
 
             {/* Modal for thoughts */}
             <Dialog open={showModal} onOpenChange={setShowModal}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
                         <DialogTitle>Share your thoughts</DialogTitle>
-                        <DialogDescription>Add optional thoughts about: {form.data.url}</DialogDescription>
+                        <DialogDescription>
+                            Add or edit thoughts about: <span className="font-medium">{form.data.url}</span>
+                        </DialogDescription>
                     </DialogHeader>
 
                     <form
@@ -91,6 +135,7 @@ export default function InlineStatusForm() {
                         <Textarea
                             name="thoughts"
                             placeholder="Your thoughts... (optional)"
+                            defaultValue={form.data.thoughts}
                             maxLength={200}
                             disabled={form.processing}
                             className="min-h-[80px]"

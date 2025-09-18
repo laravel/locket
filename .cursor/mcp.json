@@ -2,6 +2,13 @@
     "mcpServers": {
         "locket": {
             "url": "http://locket.test/mcp"
+        },
+        "laravel-boost": {
+            "command": "php",
+            "args": [
+                "artisan",
+                "boost:mcp"
+            ]
         }
     }
 }
