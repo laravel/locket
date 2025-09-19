@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::table('links', function (Blueprint $table) {
             $table->dropForeign(['submitted_by_user_id']);
-            $table->foreign('submitted_by_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('submitted_by_user_id')->nullable()->change();
+            $table->foreign('submitted_by_user_id')->references('id')->on('users')->onDelete('set null');
         });
 
         Schema::table('user_links', function (Blueprint $table) {
@@ -43,6 +44,7 @@ return new class extends Migration
     {
         Schema::table('links', function (Blueprint $table) {
             $table->dropForeign(['submitted_by_user_id']);
+            $table->unsignedBigInteger('submitted_by_user_id')->nullable(false)->change();
             $table->foreign('submitted_by_user_id')->references('id')->on('users');
         });
 
