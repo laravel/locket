@@ -406,7 +406,7 @@ function TrendingLinksSection({
                     ))}
                 </div>
             </div>
-            <span className="block px-1 py-1 text-xs/4">Locket is your social link sharing read-later app for developers</span>
+            <span className="block px-1 py-1 text-xs/4 dark:text-[#a3a3a3]">Locket is your social link sharing read-later app for developers</span>
         </div>
     );
 }
