@@ -24,7 +24,7 @@ final class GetRecentLinks
                     'title' => $link->title,
                     'description' => $link->description,
                     'category' => $link->category->value,
-                    'submitted_by' => $link->submittedBy->name,
+                    'submitted_by' => $link->submittedBy?->name ?? 'Anonymous',
                     'created_at' => $link->created_at->diffForHumans(),
                 ];
             });
