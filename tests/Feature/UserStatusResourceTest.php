@@ -38,17 +38,26 @@ it('formats user status with correct avatar URLs', function () {
         ->and($result['user']['avatar_fallback'])->toContain('avatars.laravel.cloud');
 });
 
-it('handles missing user gracefully', function () {
-    $status = UserStatus::factory()->make([
-        'status' => 'Test status',
-        'user_id' => null,
+it('handles user without github username', function () {
+    $user = User::factory()->create([
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'github_username' => null,
+        'avatar' => null,
     ]);
-    $status->user = null;
+
+    $status = UserStatus::factory()->create([
+        'user_id' => $user->id,
+        'status' => 'Test status',
+    ]);
+
+    $status->load('user');
 
     $resource = new UserStatusResource($status);
     $result = $resource->toArray(new Request);
 
-    expect($result['user']['name'])->toBe('Unknown')
+    expect($result['user']['name'])->toBe('Jane Doe')
+        ->and($result['user']['github_username'])->toBeNull()
         ->and($result['user']['avatar'])->toContain('gravatar.com/avatar')
         ->and($result['user']['avatar_fallback'])->toContain('avatars.laravel.cloud');
 });

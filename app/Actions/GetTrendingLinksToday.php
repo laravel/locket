@@ -12,6 +12,8 @@ final class GetTrendingLinksToday
 {
     /**
      * Get the top trending links for today based on user bookmarks.
+     *
+     * @return array<int, array{id: int, url: string, title: string, description: string, category: string, bookmark_count: int}>
      */
     public function handle(int $limit = 10): array
     {

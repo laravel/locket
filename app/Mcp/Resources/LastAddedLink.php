@@ -14,11 +14,12 @@ class LastAddedLink extends Resource
 
     public function handle(Request $request, GetUserLastAddedLink $getUserLastAddedLink): string
     {
-        if (! $request->user()) {
+        $user = $request->user();
+        if (! $user instanceof \App\Models\User) {
             return "❌ **Authentication Required**\n\nYou must be authenticated to view your last added link.";
         }
 
-        $result = $getUserLastAddedLink->handle($request->user());
+        $result = $getUserLastAddedLink->handle($user);
 
         if (! $result) {
             return "⚠️ **No Links Found**\n\nYou haven't added any links to your Locket yet. Try adding your first link!";

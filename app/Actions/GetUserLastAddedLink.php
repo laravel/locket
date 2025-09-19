@@ -11,9 +11,12 @@ final class GetUserLastAddedLink
 {
     /**
      * Get the user's most recently added link with its notes.
+     *
+     * @return array{user_link: array{id: int, category: string, status: string, created_at: string}, link: array{id: int, url: string, title: string, description: string, category: string}, notes: array<int, array{id: int, note: string, created_at: string}>}|null
      */
     public function handle(User $user): ?array
     {
+        /** @var UserLink|null $userLink */
         $userLink = UserLink::with(['link', 'notes' => function ($query) use ($user) {
             $query->forUser($user->id)->recent();
         }])
@@ -39,13 +42,15 @@ final class GetUserLastAddedLink
                 'description' => $userLink->link->description,
                 'category' => $userLink->link->category->value,
             ],
-            'notes' => $userLink->notes->map(function ($note) {
-                return [
-                    'id' => $note->id,
-                    'note' => $note->note,
-                    'created_at' => $note->created_at->diffForHumans(),
-                ];
-            })->toArray(),
+            'notes' => $userLink->notes->map(
+                function (\App\Models\LinkNote $note, int $key) {
+                    return [
+                        'id' => $note->id,
+                        'note' => $note->note,
+                        'created_at' => $note->created_at->diffForHumans(),
+                    ];
+                }
+            )->toArray(),
         ];
     }
 }

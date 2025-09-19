@@ -24,11 +24,10 @@ class ProfileController extends Controller
             ->where('revoked', false)
             ->orderBy('created_at', 'desc')
             ->get()
-            ->map(function ($token) {
+            ->map(function (\Laravel\Passport\Token $token) {
                 return [
                     'id' => $token->id,
                     'name' => $token->name,
-                    'last_used_at' => $token->last_used_at?->toDateTimeString(),
                     'created_at' => $token->created_at->toDateTimeString(),
                 ];
             });
@@ -83,25 +82,11 @@ class ProfileController extends Controller
     /**
      * Create a new API token.
      */
-    public function createToken(CreateApiTokenRequest $request): RedirectResponse|JsonResponse
+    public function createToken(CreateApiTokenRequest $request): JsonResponse|RedirectResponse
     {
         $tokenResult = $request->user()->createToken($request->validated()['name']);
 
-        // For API requests (not Inertia), return JSON
-        if ($request->wantsJson() && ! $request->header('X-Inertia')) {
-            return response()->json([
-                'token' => $tokenResult->accessToken,
-                'accessToken' => [
-                    'id' => $tokenResult->token->id,
-                    'name' => $tokenResult->token->name,
-                    'last_used_at' => $tokenResult->token->last_used_at,
-                    'created_at' => $tokenResult->token->created_at,
-                ],
-            ]);
-        }
-
-        // For Inertia and regular web requests, store token in session then redirect
-        // Using session instead of flash because flash doesn't always work with Inertia redirects
+        // For web/Inertia requests, store token in session then redirect
         session(['created_token' => $tokenResult->accessToken]);
 
         return back();
@@ -110,23 +95,15 @@ class ProfileController extends Controller
     /**
      * Revoke an API token.
      */
-    public function revokeToken(Request $request, string $tokenId): RedirectResponse|JsonResponse
+    public function revokeToken(Request $request, string $tokenId): JsonResponse|RedirectResponse
     {
         $token = $request->user()->tokens()->where('id', $tokenId)->first();
 
         if (! $token) {
-            if ($request->wantsJson()) {
-                return response()->json(['error' => 'Token not found'], 404);
-            }
-
             return back()->withErrors(['token' => 'Token not found or could not be revoked.']);
         }
 
         $token->revoke();
-
-        if ($request->wantsJson()) {
-            return response()->json(['message' => 'Token revoked successfully']);
-        }
 
         return back()->with('message', 'Token revoked successfully.');
     }

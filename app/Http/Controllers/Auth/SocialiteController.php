@@ -8,10 +8,11 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 
 class SocialiteController
 {
-    public function redirectToGitHub(): RedirectResponse
+    public function redirectToGitHub(): SymfonyRedirectResponse
     {
         return Socialite::driver('github')->redirect();
     }

@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         /**
          * @param  array{client: \Laravel\Passport\Client, user: \App\Models\User, scopes: array<string>, request: \Illuminate\Http\Request, authToken: string}  $parameters
          */
+        /** @phpstan-ignore-next-line */
         Passport::authorizationView(function ($parameters) {
             return view('auth.authorize', $parameters);
         });

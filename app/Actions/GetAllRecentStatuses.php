@@ -14,6 +14,8 @@ final class GetAllRecentStatuses
      * Get recent statuses as minimal payload.
      *
      * When a user is provided, only that user's statuses are returned.
+     *
+     * @return array<string, mixed>
      */
     public function handle(int $limit = 10, ?User $user = null): array
     {

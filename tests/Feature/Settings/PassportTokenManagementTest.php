@@ -14,23 +14,13 @@ it('can create a personal access token', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $response = $this->postJson(route('profile.tokens.create'), [
+    $response = $this->post(route('profile.tokens.create'), [
         'name' => 'Test Token',
     ]);
 
-    $response->assertSuccessful();
-    $response->assertJsonStructure([
-        'token',
-        'accessToken' => [
-            'id',
-            'name',
-            'last_used_at',
-            'created_at',
-        ],
-    ]);
-
-    expect($response->json('accessToken.name'))->toBe('Test Token');
-    expect($user->tokens()->count())->toBe(1);
+    $response->assertRedirect();
+    expect($user->fresh()->tokens()->count())->toBe(1);
+    expect($user->fresh()->tokens()->first()->name)->toBe('Test Token');
 });
 
 it('can list personal access tokens', function () {
@@ -60,10 +50,9 @@ it('can revoke a personal access token', function () {
 
     $this->actingAs($user);
 
-    $response = $this->deleteJson(route('profile.tokens.revoke', $token->token->id));
+    $response = $this->delete(route('profile.tokens.revoke', $token->token->id));
 
-    $response->assertSuccessful();
-    $response->assertJson(['message' => 'Token revoked successfully']);
+    $response->assertRedirect();
 
     // Check token is revoked
     $user->refresh();
@@ -78,22 +67,22 @@ it('cannot revoke a token that does not belong to the user', function () {
 
     $this->actingAs($user1);
 
-    $response = $this->deleteJson(route('profile.tokens.revoke', $token->token->id));
+    $response = $this->delete(route('profile.tokens.revoke', $token->token->id));
 
-    $response->assertNotFound();
-    $response->assertJson(['error' => 'Token not found']);
+    $response->assertRedirect();
+    $response->assertSessionHasErrors('token');
 });
 
 it('validates token name when creating', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $response = $this->postJson(route('profile.tokens.create'), [
+    $response = $this->post(route('profile.tokens.create'), [
         'name' => '',
     ]);
 
-    $response->assertUnprocessable();
-    $response->assertJsonValidationErrors('name');
+    $response->assertRedirect();
+    $response->assertSessionHasErrors('name');
 });
 
 it('can use personal access token to access API', function () {
