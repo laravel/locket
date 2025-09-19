@@ -13,6 +13,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property-read Link $link
+ * @property-read User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\LinkNote> $notes
+ */
 class UserLink extends Model
 {
     /** @use HasFactory<\Database\Factories\UserLinkFactory> */

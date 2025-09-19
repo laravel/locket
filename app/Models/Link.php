@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property-read User|null $submittedBy
+ */
 class Link extends Model
 {
     /** @use HasFactory<\Database\Factories\LinkFactory> */

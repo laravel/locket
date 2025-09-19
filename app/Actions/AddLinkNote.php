@@ -14,6 +14,8 @@ final class AddLinkNote
 {
     /**
      * Add a personal note to a user's bookmarked link.
+     *
+     * @return array{note: array{id: int, note: string, created_at: string}, link_id: int}
      */
     public function handle(int $linkId, string $note, User $user): array
     {

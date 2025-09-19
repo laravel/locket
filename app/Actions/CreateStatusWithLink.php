@@ -18,6 +18,8 @@ final class CreateStatusWithLink
 
     /**
      * Add a link and create a status update mentioning it.
+     *
+     * @return array{link: array{id: int, url: string, title: string, description: string, category: string}, user_link: array{id: int, category: string, status: string, created_at: string}, status: array{id: int, status: string, created_at: string}, already_bookmarked: bool, note?: array{id: int, note: string, created_at: string}}
      */
     public function handle(string $url, ?string $thoughts, User $user, ?string $categoryHint = null): array
     {

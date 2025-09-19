@@ -17,6 +17,8 @@ final class AddLink
 {
     /**
      * Add a link (or find existing) and create user bookmark.
+     *
+     * @return array{link: array{id: int, url: string, title: string, description: string, category: string}, user_link: array{id: int, category: string, status: string, created_at: string}, already_bookmarked: bool}
      */
     public function handle(string $url, User $user, ?string $categoryHint = null): array
     {

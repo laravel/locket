@@ -33,7 +33,7 @@ class AddLink extends Tool
 
         $user = $request->user();
 
-        if (! $user) {
+        if (! $user instanceof \App\Models\User) {
             return Response::error('Authentication required to add links');
         }
 
@@ -78,12 +78,10 @@ class AddLink extends Tool
                 ->description('The URL to add to your reading list')
                 ->required(),
             'thoughts' => $schema->string()
-                ->description('Optional thoughts or notes about this link (will be saved as a private note)')
-                ->required(false),
+                ->description('Optional thoughts or notes about this link (will be saved as a private note)'),
             'category_hint' => $schema->string()
                 ->enum(['read', 'reference', 'watch', 'tools'])
-                ->description('Optional category hint: read (articles/blogs), reference (docs/specs), watch (videos), tools (libraries/services)')
-                ->required(false),
+                ->description('Optional category hint: read (articles/blogs), reference (docs/specs), watch (videos), tools (libraries/services)'),
         ];
     }
 }

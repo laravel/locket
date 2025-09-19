@@ -36,7 +36,7 @@ class FetchLinkTitle extends Command
 
         if ($debug) {
             // Fetch the HTML directly to show what we're getting
-            $this->info("Fetching HTML with debug mode...");
+            $this->info('Fetching HTML with debug mode...');
 
             try {
                 $response = \Illuminate\Support\Facades\Http::timeout(10)
@@ -45,28 +45,28 @@ class FetchLinkTitle extends Command
 
                 $html = $response->body();
 
-                $this->info("Response Status: " . $response->status());
-                $this->info("Content Type: " . $response->header('Content-Type'));
-                $this->info("HTML Length: " . strlen($html) . " bytes");
+                $this->info('Response Status: '.$response->status());
+                $this->info('Content Type: '.$response->header('Content-Type'));
+                $this->info('HTML Length: '.strlen($html).' bytes');
 
                 // Look for title tag
                 if (preg_match('/<title[^>]*>(.*?)<\/title>/is', $html, $matches)) {
-                    $this->info("Raw title tag content: " . $matches[1]);
-                    $this->info("Cleaned title: " . html_entity_decode(trim($matches[1])));
+                    $this->info('Raw title tag content: '.$matches[1]);
+                    $this->info('Cleaned title: '.html_entity_decode(trim($matches[1])));
                 } else {
-                    $this->warn("No title tag found!");
-                    $this->info("First 1000 chars of HTML:");
+                    $this->warn('No title tag found!');
+                    $this->info('First 1000 chars of HTML:');
                     $this->line(substr($html, 0, 1000));
                 }
 
                 $this->info("\n---Now running the actual job---\n");
             } catch (\Exception $e) {
-                $this->error("Debug fetch failed: " . $e->getMessage());
+                $this->error('Debug fetch failed: '.$e->getMessage());
             }
         }
 
         // Create a temporary Link model (not saved to database)
-        $link = new Link();
+        $link = new Link;
         $link->id = 0;
         $link->url = $url;
         $link->title = null;
@@ -76,8 +76,9 @@ class FetchLinkTitle extends Command
 
         // Override the update method to just display the result
         $link->fillable(['title']);
-        $originalUpdate = \Closure::bind(function($attributes) {
+        $originalUpdate = \Closure::bind(function ($attributes) {
             $this->fill($attributes);
+
             return true;
         }, $link, Link::class);
 
@@ -89,10 +90,11 @@ class FetchLinkTitle extends Command
             if ($link->title) {
                 $this->info("✓ Successfully fetched title: {$link->title}");
             } else {
-                $this->warn("No title was fetched for this URL");
+                $this->warn('No title was fetched for this URL');
             }
         } catch (\Exception $e) {
             $this->error("Error: {$e->getMessage()}");
+
             return Command::FAILURE;
         }
 
