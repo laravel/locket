@@ -28,3 +28,13 @@ yarn-error.log
 /.vscode
 /.zed
 tests/Browser/screenshots/
+/.claude
+/.cursor
+/.agents
+/.codex
+/.gemini
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+opencode.json
+boost.json
