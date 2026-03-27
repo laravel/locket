@@ -103,12 +103,12 @@
             Alpine.store('feed').loading = false;
         }
 
-        app.onToolResult((params) => {
-            if (params.isError) {
-                loadData({ links: [], message: params.content?.[0]?.text ?? 'Something went wrong.' });
+        app.onToolResult((result) => {
+            if (result.isError) {
+                loadData({ links: [], message: result.content?.[0]?.text ?? 'Something went wrong.' });
                 return;
             }
-            const data = params.structuredContent ?? JSON.parse(params.content?.[0]?.text ?? '{}');
+            const data = result.structuredContent ?? JSON.parse(result.content?.[0]?.text ?? '{}');
             loadData(data);
         });
     });
