@@ -44,6 +44,7 @@ class UserStatusResource extends JsonResource
                 'url' => $this->link->url,
                 'title' => $this->link->title,
                 'description' => $this->link->description,
+                'category' => $this->link->category?->value,
             ],
         ];
     }

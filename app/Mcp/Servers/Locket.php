@@ -4,6 +4,7 @@ namespace App\Mcp\Servers;
 
 use App\Mcp\Prompts\SummarizeLink;
 use App\Mcp\Resources\LastAddedLink;
+use App\Mcp\Resources\LinkViewerApp;
 use App\Mcp\Tools\AddLink;
 use App\Mcp\Tools\GetRecentLinks;
 use App\Mcp\Tools\GetRecentStatuses;
@@ -27,6 +28,7 @@ class Locket extends Server
 
     public array $resources = [
         LastAddedLink::class,
+        LinkViewerApp::class,
     ];
 
     public array $prompts = [

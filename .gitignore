@@ -34,6 +34,7 @@ tests/Browser/screenshots/
 /.codex
 /.gemini
 CLAUDE.md
+.mcp.json
 AGENTS.md
 GEMINI.md
 opencode.json
