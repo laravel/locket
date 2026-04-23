@@ -15,12 +15,10 @@
     </x-slot:head>
 
     <div class="flex flex-col h-screen">
-        {{-- Header --}}
         <div class="flex-shrink-0 px-4 py-3 border-b border-neutral-200 dark:border-neutral-800">
             <h1 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100">Link Viewer</h1>
         </div>
 
-        {{-- Loading skeleton --}}
         <div x-data x-show="$store.feed.loading" class="flex-1 overflow-y-auto p-3 space-y-2">
             <template x-for="i in 4">
                 <div class="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 p-3 animate-pulse">
@@ -31,12 +29,10 @@
             </template>
         </div>
 
-        {{-- Empty state --}}
         <div x-data x-show="!$store.feed.loading && $store.feed.links.length === 0" x-cloak class="flex-1 flex items-center justify-center">
             <p class="text-xs text-neutral-400 dark:text-neutral-500" x-text="$store.feed.message || 'No links found.'"></p>
         </div>
 
-        {{-- Links --}}
         <div x-data x-show="!$store.feed.loading && $store.feed.links.length > 0" x-cloak class="flex-1 overflow-y-auto p-3 space-y-2">
             <template x-for="link in $store.feed.links" :key="link.id">
                 <div class="group rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 p-3 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
@@ -92,9 +88,11 @@
         };
 
         function loadData(data) {
-            Alpine.store('feed').links = data.links ?? [];
-            Alpine.store('feed').message = data.message ?? '';
-            Alpine.store('feed').loading = false;
+            Object.assign(Alpine.store('feed'), {
+                links: data.links ?? [],
+                message: data.message ?? '',
+                loading: false,
+            });
         }
 
         app.onToolResult((result) => {
