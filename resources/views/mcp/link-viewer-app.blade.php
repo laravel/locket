@@ -1,11 +1,6 @@
-<x-mcp::app>
+<x-mcp::app :title="$title">
     <x-slot:head>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = { darkMode: ['selector', '[data-theme="dark"]'] }
-        </script>
         <style>
-            [x-cloak] { display: none !important; }
             body { font-family: var(--font-sans, system-ui, sans-serif); }
         </style>
         <script>
@@ -17,7 +12,6 @@
                 });
             });
         </script>
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
     </x-slot:head>
 
     <div class="flex flex-col h-screen">

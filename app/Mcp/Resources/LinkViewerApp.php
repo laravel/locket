@@ -9,9 +9,10 @@ use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\AppResource;
 use Laravel\Mcp\Server\Attributes\AppMeta;
 use Laravel\Mcp\Server\Attributes\Description;
+use Laravel\Mcp\Server\Ui\Enums\Library;
 
 #[Description('Browse and discover links shared on Locket.')]
-#[AppMeta(resourceDomains: ['https://cdn.tailwindcss.com', 'https://cdn.jsdelivr.net'])]
+#[AppMeta(libraries: [Library::Tailwind, Library::Alpine])]
 class LinkViewerApp extends AppResource
 {
     public function handle(Request $request): Response
