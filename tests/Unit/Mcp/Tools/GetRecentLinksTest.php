@@ -36,17 +36,16 @@ describe('basic functionality', function () {
     test('respects custom limit parameter', function () {
         $user = User::factory()->create(['name' => 'Test User']);
 
-        // Create 5 links
         for ($i = 1; $i <= 5; $i++) {
             $link = Link::factory()->create([
                 'url' => "https://example{$i}.com",
                 'title' => "Example Site {$i}",
+                'created_at' => Carbon::now()->subMinutes($i),
             ]);
             UserLink::factory()->create([
                 'user_id' => $user->id,
                 'link_id' => $link->id,
                 'category' => 'read',
-                'created_at' => Carbon::now()->subMinutes($i),
             ]);
         }
 
