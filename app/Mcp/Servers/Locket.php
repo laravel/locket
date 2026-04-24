@@ -4,11 +4,14 @@ namespace App\Mcp\Servers;
 
 use App\Mcp\Prompts\SummarizeLink;
 use App\Mcp\Resources\LastAddedLink;
-use App\Mcp\Resources\LinkViewerApp;
+use App\Mcp\Resources\TrendingLinksApp;
+use App\Mcp\Resources\UnreadQueueApp;
 use App\Mcp\Tools\AddLink;
 use App\Mcp\Tools\GetRecentLinks;
 use App\Mcp\Tools\GetRecentStatuses;
 use App\Mcp\Tools\GetTrendingLinks;
+use App\Mcp\Tools\ShowUnreadQueue;
+use App\Mcp\Tools\StartReading;
 use Laravel\Mcp\Server;
 
 class Locket extends Server
@@ -24,11 +27,14 @@ class Locket extends Server
         GetTrendingLinks::class, // Public
         AddLink::class, // Authenticated
         GetRecentStatuses::class, // Public
+        ShowUnreadQueue::class, // Authenticated — renders UnreadQueueApp
+        StartReading::class, // Authenticated, App-only
     ];
 
     public array $resources = [
         LastAddedLink::class,
-        LinkViewerApp::class,
+        UnreadQueueApp::class,
+        TrendingLinksApp::class,
     ];
 
     public array $prompts = [

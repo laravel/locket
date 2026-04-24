@@ -11,13 +11,13 @@ use Laravel\Mcp\Server\Attributes\AppMeta;
 use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Ui\Enums\Library;
 
-#[Description('Browse and discover links shared on Locket.')]
+#[Description('Visual feed of trending links on Locket with one-click bookmark and summarise actions.')]
 #[AppMeta(libraries: [Library::Tailwind, Library::Alpine])]
-class LinkViewerApp extends AppResource
+class TrendingLinksApp extends AppResource
 {
     public function handle(Request $request): Response
     {
-        return Response::view('mcp.link-viewer-app', [
+        return Response::view('mcp.trending-links-app', [
             'title' => $this->title(),
         ]);
     }

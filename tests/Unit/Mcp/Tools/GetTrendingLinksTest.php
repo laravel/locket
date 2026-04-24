@@ -264,4 +264,10 @@ describe('tool metadata', function () {
             ->assertTitle('Get Trending Links')
             ->assertDescription('Get trending links that are popular today based on how many users have bookmarked them. Shows what the Locket community is reading right now.');
     });
+
+    test('renders the TrendingLinksApp on result', function () {
+        $meta = app(GetTrendingLinks::class)->toArray()['_meta'] ?? [];
+
+        expect($meta['ui']['resourceUri'] ?? null)->toStartWith('ui://');
+    });
 });
