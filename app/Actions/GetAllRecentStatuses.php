@@ -27,7 +27,7 @@ final class GetAllRecentStatuses
                 },
                 'link' => function ($q) {
                     // Select link data for display...
-                    $q->select('id', 'url', 'title', 'description');
+                    $q->select('id', 'url', 'title', 'description', 'category');
                 },
             ])
             ->latest();
