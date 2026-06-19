@@ -26,7 +26,7 @@ class SocialiteController
         }
 
         $user = User::where('github_id', $githubUser->getId())
-            ->orWhere('email', $githubUser->getEmail())
+            ->when($githubUser->getEmail(), fn ($query, $email) => $query->orWhere('email', $email))
             ->first();
 
         if ($user) {
@@ -35,12 +35,12 @@ class SocialiteController
                 'github_username' => $githubUser->getNickname(),
                 'avatar' => $githubUser->getAvatar(),
                 'name' => $githubUser->getName() ?? $githubUser->getNickname(),
-                'email' => $githubUser->getEmail(),
+                'email' => $githubUser->getEmail() ?? $user->email,
             ]);
         } else {
             $user = User::create([
                 'name' => $githubUser->getName() ?? $githubUser->getNickname(),
-                'email' => $githubUser->getEmail(),
+                'email' => $githubUser->getEmail() ?? $githubUser->getId().'+'.$githubUser->getNickname().'@users.noreply.github.com',
                 'github_id' => $githubUser->getId(),
                 'github_username' => $githubUser->getNickname(),
                 'avatar' => $githubUser->getAvatar(),

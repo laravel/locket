@@ -92,6 +92,52 @@ test('GitHub callback updates existing user by email', function () {
     expect($existingUser->avatar)->toBe('https://avatars.githubusercontent.com/u/87654321?v=4');
 });
 
+test('GitHub callback keeps existing email when GitHub returns none', function () {
+    $existingUser = User::factory()->create([
+        'github_id' => '12345678',
+        'email' => 'keep@example.com',
+        'name' => 'Old Name',
+    ]);
+
+    $mockUser = new SocialiteUser;
+    $mockUser->id = '12345678';
+    $mockUser->nickname = 'privateuser';
+    $mockUser->name = 'Private User';
+    $mockUser->email = null;
+    $mockUser->avatar = 'https://avatars.githubusercontent.com/u/12345678?v=4';
+
+    Socialite::shouldReceive('driver->user')->andReturn($mockUser);
+
+    $response = $this->get(route('auth.github.callback'));
+
+    $this->assertAuthenticated();
+    $response->assertRedirect('/');
+
+    $existingUser->refresh();
+    expect($existingUser->email)->toBe('keep@example.com');
+    expect($existingUser->github_username)->toBe('privateuser');
+});
+
+test('GitHub callback creates new user with noreply email when GitHub returns none', function () {
+    $mockUser = new SocialiteUser;
+    $mockUser->id = '99887766';
+    $mockUser->nickname = 'privateuser';
+    $mockUser->name = 'Private User';
+    $mockUser->email = null;
+    $mockUser->avatar = 'https://avatars.githubusercontent.com/u/99887766?v=4';
+
+    Socialite::shouldReceive('driver->user')->andReturn($mockUser);
+
+    $response = $this->get(route('auth.github.callback'));
+
+    $this->assertAuthenticated();
+    $response->assertRedirect('/');
+
+    $user = User::where('github_id', '99887766')->first();
+    expect($user)->not->toBeNull();
+    expect($user->email)->toBe('99887766+privateuser@users.noreply.github.com');
+});
+
 test('GitHub callback handles authentication failure', function () {
     Socialite::shouldReceive('driver->user')->andThrow(new \Exception('OAuth failed'));
 
