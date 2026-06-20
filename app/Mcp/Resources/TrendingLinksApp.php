@@ -12,7 +12,10 @@ use Laravel\Mcp\Server\Attributes\Description;
 use Laravel\Mcp\Server\Ui\Enums\Library;
 
 #[Description('Visual feed of trending links on Locket with one-click bookmark and summarise actions.')]
-#[AppMeta(libraries: [Library::Tailwind, Library::Alpine])]
+#[AppMeta(
+    libraries: [Library::Tailwind, Library::Alpine],
+    domain: 'c52a9c1773d9872c169453f3c0889932.claudemcpcontent.com',
+)]
 class TrendingLinksApp extends AppResource
 {
     public function handle(Request $request): Response
