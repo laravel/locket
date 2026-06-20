@@ -81,8 +81,8 @@ export default function Mcp() {
             'Generate a comprehensive AI prompt to analyze and summarize web content with actionable insights, thought-provoking questions, and suggestions for further exploration',
     };
 
-    const claudeInstallCommand = 'claude mcp add -s user -t http locket https://locket.laravel.cloud/mcp_server';
-    const mcpUrl = 'https://locket.laravel.cloud/mcp_server';
+    const claudeInstallCommand = 'claude mcp add -s user -t http locket https://locket.laravel.cloud/mcp';
+    const mcpUrl = 'https://locket.laravel.cloud/mcp';
 
     type PromptItem = { raw: string; display?: ReactNode };
     const examplePrompts: PromptItem[] = [
@@ -269,7 +269,7 @@ export default function Mcp() {
                                 <div className="flex flex-col gap-3 sm:flex-row">
                                     <Button asChild>
                                         <a
-                                            href="cursor://anysphere.cursor-deeplink/mcp/install?name=locket&config=eyJuYW1lIjoibG9ja2V0IiwidHlwZSI6Imh0dHAiLCJ1cmwiOiJodHRwczpcL1wvbG9ja2V0LmxhcmF2ZWwuY2xvdWRcL21jcF9zZXJ2ZXIifQ=="
+                                            href="cursor://anysphere.cursor-deeplink/mcp/install?name=locket&config=eyJuYW1lIjoibG9ja2V0IiwidHlwZSI6Imh0dHAiLCJ1cmwiOiJodHRwczpcL1wvbG9ja2V0LmxhcmF2ZWwuY2xvdWRcL21jcCJ9"
                                             className="flex items-center justify-center gap-x-1"
                                         >
                                             <Download className="size-4" />
