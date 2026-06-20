@@ -5,6 +5,6 @@ use Laravel\Mcp\Facades\Mcp;
 
 Mcp::oauthRoutes();
 
-Mcp::web('/mcp', Locket::class)
+Mcp::web('/mcp_server', Locket::class)
     ->name('mcp.locket')
     ->middleware('auth:api');
