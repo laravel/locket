@@ -105,7 +105,9 @@
                     if (data) {
                         loadData(data);
                         if (item?.url) {
-                            await app.sendMessage(`Please read and summarise this link for me: ${item.url}`);
+                            await app.sendMessage({
+                                content: [{ type: 'text', text: `Please read and summarise this link for me: ${item.url}` }],
+                            });
                         }
                     } else {
                         Alpine.store('queue').busyId = null;

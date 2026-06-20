@@ -26,7 +26,9 @@
                     async summarize(url) {
                         console.log('[locket] summarize', url);
                         if (!window.mcp) return;
-                        await window.mcp.sendMessage(`Please read and summarise this link for me: ${url}`);
+                        await window.mcp.sendMessage({
+                            content: [{ type: 'text', text: `Please read and summarise this link for me: ${url}` }],
+                        });
                     },
 
                     async bookmark(link) {
