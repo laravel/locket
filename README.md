@@ -39,7 +39,13 @@ Users can manage their API tokens in the user profile settings area (`/settings/
 
 Locket comes with an MCP server located at http://locket.test/mcp, with tools, a resource, and a prompt.
 
+Laravel MCP 1.x supports protocol revision `2026-07-28` through `server/discover`. Modern requests include the protocol version and client capabilities in `params._meta`, with matching `MCP-Protocol-Version` and `Mcp-Method` HTTP headers. Tool, prompt, and resource calls also require a matching `Mcp-Name` header. Legacy clients using `initialize` remain supported. See the [MCP upgrade guide](https://github.com/laravel/mcp/blob/main/UPGRADE.md) for request examples.
+
+Requests with an `Origin` header must match `APP_URL` exactly, excluding its trailing slash. Set `APP_URL` to the application's public origin, including the scheme and any non-default port. Native MCP clients that omit `Origin` remain supported. GET requests accepting `text/event-stream` return HTTP 405; browser requests still show the MCP information page.
+
 # Setup
+
+The application requires PHP 8.4 or later and Node.js 22.12 or later.
 
 ```shell
 composer install
@@ -49,6 +55,8 @@ php artisan passport:keys
 npm install
 npm run build
 ```
+
+TypeScript remains on 6.0 because `typescript-eslint` does not yet support TypeScript 7. ESLint remains on 9 because `eslint-plugin-react` does not yet support ESLint 10.
 
 # HTTP Notes
 

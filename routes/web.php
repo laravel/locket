@@ -2,6 +2,7 @@
 
 use App\Actions\GetAllRecentStatuses;
 use App\Actions\GetTrendingLinksToday;
+use App\Http\Controllers\LinkController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +14,10 @@ Route::get('/', function (GetAllRecentStatuses $statuses, GetTrendingLinksToday 
 })->name('home');
 
 Route::get('/mcp', function () {
+    if (in_array('text/event-stream', request()->getAcceptableContentTypes(), true)) {
+        return response('', 405)->header('Allow', 'POST');
+    }
+
     return Inertia::render('mcp');
 })->name('mcp');
 
@@ -48,7 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         })->toArray(),
                     ];
                 })->toArray();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // If there's an error with userLinks, default to empty array
             $userLinks = [];
         }
@@ -58,13 +63,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('dashboard');
 
-    Route::post('status-with-link', [App\Http\Controllers\LinkController::class, 'storeStatusWithLink'])->name('status-with-link.store');
+    Route::post('status-with-link', [LinkController::class, 'storeStatusWithLink'])->name('status-with-link.store');
 
     // Link management routes
-    Route::post('links', [App\Http\Controllers\LinkController::class, 'store'])->name('links.store');
-    Route::post('links/notes', [App\Http\Controllers\LinkController::class, 'storeNote'])->name('links.notes.store');
-    Route::patch('user-links/{userLink}', [App\Http\Controllers\LinkController::class, 'update'])->name('user-links.update');
-    Route::post('links/{linkId}/bookmark', [App\Http\Controllers\LinkController::class, 'bookmark'])->name('links.bookmark');
+    Route::post('links', [LinkController::class, 'store'])->name('links.store');
+    Route::post('links/notes', [LinkController::class, 'storeNote'])->name('links.notes.store');
+    Route::patch('user-links/{userLink}', [LinkController::class, 'update'])->name('user-links.update');
+    Route::post('links/{linkId}/bookmark', [LinkController::class, 'bookmark'])->name('links.bookmark');
 });
 
 require __DIR__.'/settings.php';
